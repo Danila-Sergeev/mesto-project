@@ -1,0 +1,10 @@
+.page__cards-grid {
+  margin: 45px auto 0 auto;
+
+}
+
+@media screen and (max-width:320px){
+  .page__cards-grid{
+    margin: 25px auto 0 auto;
+  }
+}

@@ -1,0 +1,7 @@
+.card__bottom {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 21px;
+  padding-right: 15px;
+  background: #FFFFFF;
+}

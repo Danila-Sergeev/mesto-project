@@ -1,0 +1,12 @@
+.header {
+  min-height: 74px;
+  position: relative;
+  max-width: 880px;
+  padding-top: 45px;
+}
+
+@media screen and (max-width:580px){
+  .header{
+   padding-top: 28px;
+  }
+}
