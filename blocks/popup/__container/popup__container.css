@@ -1,11 +1,15 @@
 .popup__container {
-  max-width: 430px;
+  min-width: 430px;
   min-height: 330px;
   background: #FFFFFF;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  position: sticky;
-  top: 30%;
+ /*  position: sticky;
+  top: 30%; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -14,7 +18,7 @@
 }
 @media screen and (max-width: 600px) {
   .popup__container{
-    max-width: 282px;
+    min-width: 282px;
     min-height: 322px;
   }
 }
