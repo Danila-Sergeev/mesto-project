@@ -1,5 +1,6 @@
 .profile__edit {
-  padding-top: 32px;
+  padding-top: 40px;
+  margin-top: 20px;
   border: none;
   font: inherit;
   color: inherit;
@@ -9,7 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size:contain;
-  max-width: 24px;
+  min-width: 24px;
 }
 .profile__edit:hover{
   opacity: 0.6;
