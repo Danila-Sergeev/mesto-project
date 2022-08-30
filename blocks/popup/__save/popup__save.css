@@ -10,7 +10,9 @@
   line-height: 22px;
   text-align: center;
   color: #FFFFFF;
+  border: none;
   border-radius: 2px;
+  margin-top: 48px;
 }
 
 .popup__save:hover{
@@ -22,5 +24,6 @@
     font-size: 14px;
     line-height: 17px;
     margin-bottom: 25px;
+    margin-top: 45px;
   }
 }

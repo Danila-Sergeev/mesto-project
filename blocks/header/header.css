@@ -3,10 +3,29 @@
   position: relative;
   max-width: 880px;
   padding-top: 45px;
+  border-bottom: 2px solid #545454;
+  opacity: 0.7;
 }
 
+@media screen and (max-width:1120px){
+  .header{
+    margin-left: 50px;
+    margin-right: 50px;
+    max-width: 860px;
+  }
+}
 @media screen and (max-width:580px){
   .header{
    padding-top: 28px;
+   margin-left: 27px;
+   margin-right: 27px;
+   border-bottom: 1px solid #545454;
+  }
+}
+@media screen and (max-width:320px){
+  .header{
+    margin-right: 0;
+    margin-left: 0;
+    min-height: 56px;
   }
 }

@@ -1,4 +1,9 @@
 .card__like {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
   cursor: pointer;
   background-image: url(../../../images/like.svg);
   background-position: center;
@@ -7,17 +12,12 @@
   min-width: 22px;
   margin-right: 5px;
   margin-bottom: 3px;
-
+  transition: .25s;
 }
 .card__like:hover{
   opacity: 0.5;
-  transition: .5s;
-}
-.card__like:not(hover){
-  transition: .5s;
 }
 .card__like:active{
   opacity: 1;
   background-image: url(../../../images/like-black.svg);
-  transition: .1s;
 }

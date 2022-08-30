@@ -1,0 +1,11 @@
+.popup__edit{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 44px;
+}
+@media screen and (max-width: 600px) {
+  .popup__edit{
+    padding-top: 71px;
+  }
+}

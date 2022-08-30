@@ -12,80 +12,83 @@
 </head>
 <body class="body">
   <div class="page">
-    <header class="header page__header page__section">
+    <header class="header page__header">
       <img src="./images/logo.svg" alt="Лого" class="header__logo">
-      <div class="header__line"></div>
     </header>
     <main class="content">
       <section class="profile page__profile">
         <div class="profile__person-info">
           <img src="./images/image.jpg" alt="Фото профиля" class="profile__avatar">
           <div class="profile__info">
-            <p class="profile__name">Жак-Ив Кусто</p>
-            <img src="./images/Edit Button.svg" alt="Кнопка редактировать" class="profile__edit">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="submit" class="profile__edit">
+            </button>
             <p class="profile__status">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button">
+        <button class="profile__add-button" aria-label="Add">
         </button>
       </section>
       <section class="cards-grid page__cards-grid">
         <article class="card">
           <img src="./images/palace.jpg" alt="Карачаевск" class="card__img">
           <div class="card__bottom">
-            <p class="card__name">Карачаевск</p>
-            <div class="card__like"></div>
+            <h2 class="card__name">Карачаевск</h2>
+            <button type="submit" class="card__like"></button>
           </div>
         </article>
         <article class="card">
           <img src="./images/fild.png" alt="Эльбрус" class="card__img">
           <div class="card__bottom">
-            <p class="card__name">Гора Эльбрус</p>
-            <div class="card__like"></div>
+            <h2 class="card__name">Гора Эльбрус</h2>
+            <button type="submit" class="card__like"></button>
           </div>
         </article>
         <article class="card">
           <img src="./images/mount.png" alt="Домбай" class="card__img">
           <div class="card__bottom">
-            <p class="card__name">Домбай</p>
-            <div class="card__like"></div>
+            <h2 class="card__name">Домбай</h2>
+            <button type="submit" class="card__like"></button>
           </div>
         </article>
         <article class="card">
           <img src="./images/fild.png" alt="Эльбрус" class="card__img">
           <div class="card__bottom">
-            <p class="card__name">Гора Эльбрус</p>
-            <div class="card__like"></div>
+            <h2 class="card__name">Гора Эльбрус</h2>
+            <button type="submit" class="card__like"></button>
           </div>
         </article>
         <article class="card">
           <img src="./images/mount.png" alt="Домбай" class="card__img">
           <div class="card__bottom">
-            <p class="card__name">Домбай</p>
-            <div class="card__like"></div>
+            <h2 class="card__name">Домбай</h2>
+            <button type="submit" class="card__like"></button>
           </div>
         </article>
         <article class="card">
           <img src="./images/palace.jpg" alt="Карачаевск" class="card__img">
           <div class="card__bottom">
-            <p class="card__name">Карачаево-Черкессия</p>
-            <div class="card__like"></div>
+            <h2 class="card__name">Карачаево-Черкессия</h2>
+            <button type="submit" class="card__like"></button>
           </div>
         </article>
-      </section>
-      <section class="popup page__popup">
-        <div class="popup__container">
-          <img src="./images/Close Icon.png" alt="Крестик" class="popup__close-icon">
-          <p class="popup__title">Редактировать профиль</p>
-          <input type="text" name="firstname" class="popup__name" placeholder="Имя" required>
-          <input type="text" name="about" class="popup__about" placeholder="О себе" required>
-          <button type="button" name="save" class="popup__save">Сохранить</button>
-        </div>
       </section>
     </main>
     <footer class="footer page__footer ">
       <p class="footer__name">&copy; 2022 Mesto Russia</p>
     </footer>
+    <div class="popup">
+      <div class="popup__container">
+        <button type="submit" class="popup__close-icon" >
+        </button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form name="edit-profile" class="popup__edit">
+          <input type="text" name="firstname" class="popup__info popup_type_name" placeholder="Имя" required>
+          <input type="text" name="about" class="popup__info popup_type_about" placeholder="О себе" required>
+          <button type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>
+        </form>
+      </div>
+    </div>
   </div>
 </body>
 </html>

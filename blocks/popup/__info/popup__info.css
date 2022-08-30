@@ -1,4 +1,4 @@
-.popup__about {
+.popup__info {
   all: unset;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   min-width: 358px;
@@ -7,9 +7,16 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
+  margin-bottom: 34px;
+  padding-bottom: 10px;
 }
 @media screen and (max-width: 600px) {
-  .popup__about{
+  .popup__info{
     min-width: 238px;
+    margin-bottom: 30px;
   }
+}
+.popup__info:last-of-type{
+  margin-bottom: 0;
+  padding-top: 0;
 }
