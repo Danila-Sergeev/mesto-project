@@ -11,13 +11,10 @@
   background-repeat: no-repeat;
   background-size:contain;
   min-width: 24px;
+  transition: .5s;
 }
 .profile__edit:hover{
   opacity: 0.6;
-  transition: .5s;
-}
-.profile__edit:not(hover){
-  transition: .5s;
 }
 
 @media screen and (max-width:320px){
