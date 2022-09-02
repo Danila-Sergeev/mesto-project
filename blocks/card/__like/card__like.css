@@ -10,8 +10,10 @@
   background-size:contain;
   background-repeat: no-repeat;
   min-width: 22px;
+  max-height: 22px;
   margin-right: 5px;
   margin-bottom: 3px;
+  margin-top: 26px;
   transition: .25s;
 }
 .card__like:hover{
