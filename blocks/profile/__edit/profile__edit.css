@@ -12,6 +12,7 @@
   background-size:contain;
   min-width: 24px;
   transition: .5s;
+  z-index: 1;
 }
 .profile__edit:hover{
   opacity: 0.6;

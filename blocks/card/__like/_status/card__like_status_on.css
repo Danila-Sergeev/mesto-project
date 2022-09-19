@@ -1,0 +1,7 @@
+.card__like_status_on{
+  opacity: 1;
+  background-image: url(../../../../images/like-black.svg);
+  background-position: center;
+  background-size:contain;
+  background-repeat: no-repeat;
+}

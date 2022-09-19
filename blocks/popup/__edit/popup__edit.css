@@ -1,8 +1,10 @@
 .popup__edit{
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding-top: 44px;
+  max-height: 182px;
+  height: inherit;
 }
 @media screen and (max-width: 600px) {
   .popup__edit{

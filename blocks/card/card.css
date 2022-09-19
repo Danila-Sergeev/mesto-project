@@ -1,7 +1,12 @@
 .card {
   max-width: 282px;
+  max-height: 360px;
   border-radius: 3%;
   overflow: hidden;
   margin: auto;
   background-color: white;
+  position: relative;
+}
+.card:last-of-type{
+  display: none;
 }
