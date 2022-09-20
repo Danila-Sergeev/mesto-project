@@ -1,6 +1,7 @@
 .popup-img__photo{
   max-width: 816px;
   max-height: 540px;
+  height: inherit;
   z-index: 3;
 }
 
