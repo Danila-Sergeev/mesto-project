@@ -1,4 +1,4 @@
-.popup-img__name{
+.popup_img_name{
   position: absolute;
   left:  0;
   bottom: -20px;
@@ -7,7 +7,5 @@
   font-size: 12px;
   line-height: 15px;
   margin: 0;
-
-color: #FFFFFF;
-
+  color: #FFFFFF;
 }

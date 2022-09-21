@@ -15,7 +15,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size:contain;
-
+  transition: .6s;
 }
 .popup__close-icon:hover{
   opacity: 0.6;

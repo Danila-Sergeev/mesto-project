@@ -7,6 +7,3 @@
   background-color: white;
   position: relative;
 }
-.card:last-of-type{
-  display: none;
-}

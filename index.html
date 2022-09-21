@@ -30,16 +30,10 @@
         </button>
       </section>
       <section class="cards-grid page__cards-grid">
-        <article class="card">
-          <div class="card__bottom">
-            <h2 class="card__name"></h2>
-            <button type="button" id="like" class="card__like"></button>
-          </div>
-        </article>
       </section>
       <template id="card-template">
-        <article class="card" id="card-remove">
-          <button type="button" id="remove-button" class="card__trash">
+        <article class="card">
+          <button type="button" class="card__trash">
           </button>
           <button id="buttonImgCard" class="card__CLickImg"><img  id="card-img" class="card__img"></button>
           <div class="card__bottom">
@@ -66,7 +60,7 @@
     </div>
     <div id="popup-container-place" class="popup">
       <div class="popup__container">
-        <button type="button" id="popup-close-icon-plce" class="popup__close-icon" >
+        <button type="button" id="popup-close-icon-place" class="popup__close-icon" >
         </button>
         <h3 class="popup__title popup__title-place">Новое место</h3>
         <form id="popup-img-cont" name="edit-profile" class="popup__edit">
@@ -76,14 +70,15 @@
         </form>
       </div>
     </div>
-    <div class=" popup-img">
-      <div class="popup-img__container">
-        <button id="poppup-img-close" type="button" id="popup-close-icon-img" class="popup-img__close-icon" ></button>
-        <img  alt="" class="popup-img__photo">
-        <p class="popup-img__name">opopopopoopo</p>
+    <div class="popup popup_img">
+      <div class="popup_img_container popup__container">
+        <button id="popup-img-close" type="button" class="popup__close-icon" ></button>
+        <img  alt="" class="popup_img_photo">
+        <p class="popup_img_name">opopopopoopo</p>
       </div>
     </div>
   </div>
+  <script src="./cards.js"></script>
   <script src="./script.js"></script>
 </body>
 </html>
