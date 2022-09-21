@@ -91,7 +91,7 @@ formElementImg.addEventListener('submit', (evt)=>{
   const linkImg = document.querySelector('#input-src');
   const ImgName = document.querySelector('#input-text-img');
 
-  addCard(linkImg.value, ImgName.value);
+  renderCard(linkImg.value, ImgName.value);
   linkImg.value = '';
   ImgName.value = '';
 }
