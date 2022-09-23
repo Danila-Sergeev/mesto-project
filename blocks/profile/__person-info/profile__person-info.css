@@ -4,11 +4,17 @@
   max-width: 650px;
 }
 
+@media screen and (max-width:1200px){
+  .profile__person-info{
+    max-width: 500px;
+  }
+}
 @media screen and (max-width:580px){
   .profile__person-info{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 335px;
   }
 }
 
