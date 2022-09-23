@@ -22,8 +22,9 @@
 @import url(../blocks/profile/__status/profile__status.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__edit/profile__edit.css);
+@import url(../blocks/profile/__info-top/profile__info-top.css);
 
-@import url(../blocks/cards-grid/cards-grid.css);
+@import url(../blocks/cards-grid/cards-grid.css); 
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/card/__like/card__like.css);
