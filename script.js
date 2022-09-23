@@ -17,6 +17,7 @@ const profileButtonAddImg = document.querySelector('#add-button-img');
 const formElement = document.querySelector('.popup__edit');
 const popupImg = document.querySelector('.popup_img');
 const popupImgClose = document.querySelector('#popup-img-close');
+const popupImgName = document.querySelector('.popup_img_name');
 
 
 // Открытие - закрытие попап:
@@ -56,11 +57,9 @@ function addCard(photoLink, placeName){
   cardElement.querySelector('#card-name').textContent = placeName;
   cardElement.querySelector('#buttonImgCard').addEventListener('click',(evt)=>{
     evt.preventDefault();
-    const popupImgName = document.querySelector('.popup_img_name');
     const popupImgPhoto = document.querySelector('.popup_img_photo');
 
     openPopup(popupImg, 'popup_opened');
-    popupImgClose.addEventListener('click',() => closePopup(popupImg, 'popup_opened'));
     popupImgName.textContent = placeName;
     popupImgPhoto.setAttribute('src', photoLink);
 
@@ -70,7 +69,7 @@ function addCard(photoLink, placeName){
   cardElement.querySelectorAll('.card__trash').forEach( btn => {
     btn.addEventListener('click', () =>{
         const card = btn.closest('.card');
-        card.parentNode.removeChild(card);
+        card.remove();
     });
 });
 return (cardElement);
