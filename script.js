@@ -21,21 +21,18 @@ const popupImgName = document.querySelector('.popup_img_name');
 
 
 // Открытие - закрытие попап:
-function openPopup(popup, popupClass){
-  popup.classList.add(popupClass);
-}
 function closePopup(popup, popupClass){
   popup.classList.remove(popupClass);
 }
 bottonEditProfile.addEventListener('click', () => {
-  openPopup(popup,'popup_opened') ;
+  popup.classList.add('popup_opened') ;
   popupInfoName.setAttribute('value', profileName.textContent);
   popupInfoAbout.setAttribute('value', profileStatus.textContent);
 });
 
 buttonClosePopup.addEventListener('click', () => closePopup(popup,'popup_opened'));
 
-profileButtonAdd.addEventListener('click', () => openPopup(popupPlace,'popup_opened'));
+profileButtonAdd.addEventListener('click', () =>  popupPlace.classList.add('popup_opened'));
 
 buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace,'popup_opened'));
 
@@ -53,19 +50,19 @@ buttonPopupSave.addEventListener('click', () => closePopup(popup,'popup_opened')
 function addCard(photoLink, placeName){
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  cardElement.querySelector('#card-img').setAttribute('src', photoLink);
-  cardElement.querySelector('#card-name').textContent = placeName;
-  cardElement.querySelector('#buttonImgCard').addEventListener('click',(evt)=>{
+  cardElement.querySelector('.card__img').setAttribute('src', photoLink);
+  cardElement.querySelector('.card__name').textContent = placeName;
+  cardElement.querySelector('.card__click-img').addEventListener('click',(evt)=>{
     evt.preventDefault();
     const popupImgPhoto = document.querySelector('.popup_img_photo');
 
-    openPopup(popupImg, 'popup_opened');
+    popupImg.classList.add('popup_opened')
     popupImgName.textContent = placeName;
     popupImgPhoto.setAttribute('src', photoLink);
 
   });
   popupImgClose.addEventListener('click',() => closePopup(popupImg, 'popup_opened'));
-  cardElement.querySelector('#like').addEventListener('click', evt => evt.target.classList.toggle('card__like_status_on'));
+  cardElement.querySelector('.card__like').addEventListener('click', evt => evt.target.classList.toggle('card__like_status_on'));
   cardElement.querySelectorAll('.card__trash').forEach( btn => {
     btn.addEventListener('click', () =>{
         const card = btn.closest('.card');
