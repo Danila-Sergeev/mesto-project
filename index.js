@@ -33,11 +33,11 @@ bottonEditProfile.addEventListener('click', () => {
   popupInfoAbout.setAttribute('value', profileStatus.textContent);
 });
 
-buttonClosePopup.addEventListener('click', () => closePopup(popup,'popup_opened'));
+buttonClosePopup.addEventListener('click', () => closePopup(popup));
 
 profileButtonAdd.addEventListener('click', () => openPopup(popupPlace));
 
-buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace,'popup_opened'));
+buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace));
 
 // Редактирование профиля через форму:
 function formSubmitHandler (evt) {
@@ -47,7 +47,7 @@ function formSubmitHandler (evt) {
 
 }
 formElement.addEventListener('submit', formSubmitHandler);
-buttonPopupSave.addEventListener('click', () => closePopup(popup,'popup_opened'));
+buttonPopupSave.addEventListener('click', () => closePopup(popup));
 
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
 function addCard(photoLink, placeName){
@@ -62,7 +62,7 @@ function addCard(photoLink, placeName){
   cardElement.querySelector('.card__img').addEventListener('click',(evt)=>{
     evt.preventDefault();
     const popupImgPhoto = document.querySelector('.popup_img_photo');
-    popupImg.classList.add('popup_opened')
+    openPopup(popupImg);
     popupImgName.textContent = placeName;
     popupImgPhoto.setAttribute('src', photoLink);
   });
@@ -77,7 +77,7 @@ function addCard(photoLink, placeName){
 
 return (cardElement);
 }
-popupImgClose.addEventListener('click',() => closePopup(popupImg, 'popup_opened'));
+popupImgClose.addEventListener('click',() => closePopup(popupImg));
 function renderCard(photoLink, placeName){
   cardContainer.prepend(addCard(photoLink, placeName));
 }
@@ -88,17 +88,16 @@ initialCards.forEach(item => {
 });
 
 // Добавление карточки через форму:
+const linkImg = document.querySelector('#input-src');
+const ImgName = document.querySelector('#input-text-img');
 formElementImg.addEventListener('submit', (evt)=>{
   evt.preventDefault();
-  const linkImg = document.querySelector('#input-src');
-  const ImgName = document.querySelector('#input-text-img');
-
   renderCard(linkImg.value, ImgName.value);
   linkImg.value = '';
   ImgName.value = '';
 }
-)
-profileButtonAddImg.addEventListener('click', () => closePopup(popupPlace,'popup_opened'));
+);
+profileButtonAddImg.addEventListener('click', () => closePopup(popupPlace));
 
 
 
