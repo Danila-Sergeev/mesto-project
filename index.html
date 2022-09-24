@@ -33,17 +33,6 @@
       </section>
       <section class="cards-grid page__cards-grid">
       </section>
-      <template id="card-template">
-        <article class="card">
-          <button type="button" class="card__trash">
-          </button>
-          <button class="card__click-img"><img class="card__img"></button>
-          <div class="card__bottom">
-            <h2 class="card__name"></h2>
-            <button type="button" class="card__like"></button>
-          </div>
-        </article>
-      </template>
     </main>
     <footer class="footer page__footer ">
       <p class="footer__name">&copy; 2022 Mesto Russia</p>
@@ -80,7 +69,18 @@
       </div>
     </div>
   </div>
+  <template id="card-template">
+    <article class="card">
+      <button type="button" class="card__trash">
+      </button>
+      <img class="card__img">
+      <div class="card__bottom">
+        <h2 class="card__name"></h2>
+        <button type="button" class="card__like"></button>
+      </div>
+    </article>
+  </template>
   <script src="./cards.js"></script>
-  <script src="./script.js"></script>
+  <script src="./index.js"></script>
 </body>
 </html>

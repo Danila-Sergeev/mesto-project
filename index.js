@@ -21,18 +21,21 @@ const popupImgName = document.querySelector('.popup_img_name');
 
 
 // Открытие - закрытие попап:
-function closePopup(popup, popupClass){
-  popup.classList.remove(popupClass);
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 bottonEditProfile.addEventListener('click', () => {
-  popup.classList.add('popup_opened') ;
+  openPopup(popup);
   popupInfoName.setAttribute('value', profileName.textContent);
   popupInfoAbout.setAttribute('value', profileStatus.textContent);
 });
 
 buttonClosePopup.addEventListener('click', () => closePopup(popup,'popup_opened'));
 
-profileButtonAdd.addEventListener('click', () =>  popupPlace.classList.add('popup_opened'));
+profileButtonAdd.addEventListener('click', () => openPopup(popupPlace));
 
 buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace,'popup_opened'));
 
@@ -50,31 +53,34 @@ buttonPopupSave.addEventListener('click', () => closePopup(popup,'popup_opened')
 function addCard(photoLink, placeName){
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+
+  //передача значений с попапа:
   cardElement.querySelector('.card__img').setAttribute('src', photoLink);
   cardElement.querySelector('.card__name').textContent = placeName;
-  cardElement.querySelector('.card__click-img').addEventListener('click',(evt)=>{
+
+  //открытие попапа с картинкой:
+  cardElement.querySelector('.card__img').addEventListener('click',(evt)=>{
     evt.preventDefault();
     const popupImgPhoto = document.querySelector('.popup_img_photo');
-
     popupImg.classList.add('popup_opened')
     popupImgName.textContent = placeName;
     popupImgPhoto.setAttribute('src', photoLink);
-
   });
-  popupImgClose.addEventListener('click',() => closePopup(popupImg, 'popup_opened'));
+
+  //лайк:
   cardElement.querySelector('.card__like').addEventListener('click', evt => evt.target.classList.toggle('card__like_status_on'));
-  cardElement.querySelectorAll('.card__trash').forEach( btn => {
-    btn.addEventListener('click', () =>{
-        const card = btn.closest('.card');
-        card.remove();
-    });
+
+  //удаление карточки:
+  cardElement.querySelector('.card__trash').addEventListener('click', () =>{
+    cardElement.remove();
 });
+
 return (cardElement);
 }
+popupImgClose.addEventListener('click',() => closePopup(popupImg, 'popup_opened'));
 function renderCard(photoLink, placeName){
   cardContainer.prepend(addCard(photoLink, placeName));
 }
-
 
 // Добавление 6-ти основных карточек:
 initialCards.forEach(item => {

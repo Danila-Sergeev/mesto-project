@@ -9,25 +9,7 @@
 @media screen and (max-width: 1000px){
   .popup_img_container{
     max-width: 75vw;
-    max-height: 49vh;
-  }
-}
-@media screen and (max-width: 800px){
-  .popup_img_container{
-    max-width: 75vw;
-  max-height: 49vh;
-  }
-}
-@media screen and (max-width: 582px){
- .popup_img_container{
-    max-width: 75vw;
-    max-height: 49vh;
-  }
-}
-@media screen and (max-width: 430px){
-  .popup_img_container{
-    max-width: 75vw;
-    max-height: 49vh;
+    max-height: 45vh;
   }
 }
 @media screen and (max-width: 320px){
