@@ -29,12 +29,21 @@ bottonEditProfile.addEventListener('click', () => {
   popupInfoName.setAttribute('value', profileName.textContent);
   popupInfoAbout.setAttribute('value', profileStatus.textContent);
 });
-
-buttonClosePopup.addEventListener('click', () => closePopup(popup,'popup_opened'));
+function KeyEsc(evt){
+  closePopup(popup,'popup_opened');
+  if (evt.key === 'Escape'){
+    closePopup(popup,'popup_opened');
+  }
+}
+buttonClosePopup.addEventListener('click', () =>
+  closePopup(popup,'popup_opened')
+);
 
 profileButtonAdd.addEventListener('click', () =>  popupPlace.classList.add('popup_opened'));
 
-buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace,'popup_opened'));
+buttonPlaceClose.addEventListener('click', () =>
+  closePopup(popup,'popup_opened')
+);
 
 // Редактирование профиля через форму:
 function formSubmitHandler (evt) {
