@@ -1,9 +1,13 @@
 const popup = document.querySelector('#popup');
+const content = document.querySelector('.content');
+const page = document.querySelector('.page')
 const popupEdit = document.querySelector('.popup__edit');
 const popupImgCont = document.querySelector('#popup-img-cont');
 const bottonEditProfile = document.querySelector('.profile__edit');
 const buttonPlaceClose = document.querySelector('#popup-close-icon-place');
-const popupPlace = document.querySelector('#popup-container-place')
+const popupPlace = document.querySelector('#popup-container-place');
+const popupAvatar = document.querySelector('#popup-avatar');
+const popupAvatarBtn = document.querySelector('#add-button-img-avatar');
 const profileButtonAdd = document.querySelector('.profile__add-button');
 const buttonClosePopup = document.querySelector('.popup__close-icon');
 const profileName = document.querySelector('.profile__name');
@@ -15,10 +19,21 @@ const cardContainer = document.querySelector('.cards-grid');
 const formElementImg = document.querySelector('#popup-img-cont');
 const profileButtonAddImg = document.querySelector('#add-button-img');
 const formElement = document.querySelector('.popup__edit');
+const formElementAvater = document.querySelector('#popup-img-avatar');
 const popupImg = document.querySelector('.popup_img');
 const popupImgClose = document.querySelector('#popup-img-close');
 const popupImgName = document.querySelector('.popup_img_name');
+const avatar = document.querySelector('.profile__avatar');
+const avatarEdit = document.querySelector('.profile__avatar_edit');
+const avatarClose = document.querySelector('#popup-avatar-close');
+const avatarValue = document.querySelector('#input-src-avatar');
 
+
+//нажате кнопки изменения аватара:
+avatar.addEventListener('mouseover', () => {avatarEdit.classList.add('popup_opened'); avatar.classList.add('profile__avatar_opacity')});
+avatar.addEventListener('mouseout', () => {avatarEdit.classList.remove('popup_opened');  avatar.classList.remove('profile__avatar_opacity')});
+avatarEdit.addEventListener('mouseover', () => {avatarEdit.classList.add('popup_opened');  avatar.classList.add('profile__avatar_opacity')});
+avatarEdit.addEventListener('mouseout', () => {avatarEdit.classList.remove('popup_opened'); avatar.classList.remove('profile__avatar_opacity')});
 
 // Открытие - закрытие попап:
 function openPopup(popup) {
@@ -32,26 +47,54 @@ bottonEditProfile.addEventListener('click', () => {
   popupInfoName.setAttribute('value', profileName.textContent);
   popupInfoAbout.setAttribute('value', profileStatus.textContent);
 });
+function closeBtns(evt){
+  if (evt.key === 'Escape'){
+    closePopup(popup);
+    closePopup(popupPlace);
+    closePopup(popupImg);
+    closePopup(popupAvatar);
+  }
+}
+function overlay(evt){
+  if (evt.target == this){
+    closePopup(popup);
+    closePopup(popupPlace);
+    closePopup(popupImg);
+    closePopup(popupAvatar);
+  }
+}
+buttonClosePopup.addEventListener('click', () =>  closePopup(popup));
 
-buttonClosePopup.addEventListener('click', () => closePopup(popup));
+document.addEventListener('keydown', closeBtns);
+
+popupPlace.addEventListener('click', overlay);
+popup.addEventListener('click', overlay);
+popupImg.addEventListener('click', overlay);
+popupAvatar.addEventListener('click', overlay);
+
+avatar.addEventListener('click', () => openPopup(popupAvatar));
+avatarEdit.addEventListener('click', () => openPopup(popupAvatar));
+avatarClose.addEventListener('click', () =>  closePopup(popupAvatar));
 
 profileButtonAdd.addEventListener('click', () => openPopup(popupPlace));
-<<<<<<< HEAD:script.js
 
 buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace));
 
-=======
-
-buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace));
->>>>>>> 2eef94b5ace6190336607df288d88294effd81b3:index.js
 
 // Редактирование профиля через форму:
 function formSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = popupInfoName.value;
   profileStatus.textContent = popupInfoAbout.value;
-
 }
+function formSubmitAvatar (evt) {
+  evt.preventDefault();
+  avatar.setAttribute('src', avatarValue.value);
+  avatarValue.value = '';
+}
+
+formElementAvater.addEventListener('submit', formSubmitAvatar);
+popupAvatarBtn.addEventListener('click', () => closePopup(popupAvatar));
 formElement.addEventListener('submit', formSubmitHandler);
 buttonPopupSave.addEventListener('click', () => closePopup(popup));
 

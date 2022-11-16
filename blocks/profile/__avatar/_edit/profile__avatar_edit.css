@@ -1,0 +1,23 @@
+.profile__avatar_edit{
+  position: absolute;
+  opacity: 0;
+  top: 49px;
+  left: 46px;
+  transition: .7s;
+}
+@media screen and (max-width:580px){
+  .profile__avatar_edit{
+    top: 66px;
+    left: 155px;
+  }}
+@media screen and (max-width:381px){
+  .profile__avatar_edit{
+    position: static;
+    margin-top: -104px;
+    margin-bottom: 104px;
+  }}
+@media screen and (max-width:320px){
+  .profile__avatar_edit{
+    margin-top: -85px;
+    margin-bottom: 85px;
+  }}

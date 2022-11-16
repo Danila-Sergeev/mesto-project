@@ -19,6 +19,7 @@
       <section class="profile page__profile">
         <div class="profile__person-info">
           <img src="./images/image.jpg" alt="Фото профиля" class="profile__avatar">
+          <img src="./images/pensel.svg" alt="" class="profile__avatar_edit">
           <div class="profile__info">
             <div class="profile__info-top">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -58,6 +59,17 @@
           <input id="input-text-img" type="text" name="firstname" class="popup__info popup__info_field_name" placeholder="Название" required >
           <input id="input-src" type="text" name="about" class="popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
           <button id="add-button-img" type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <div id="popup-avatar" class="popup" >
+      <div class="popup__container popup__container_avatar">
+        <button type="button" id="popup-avatar-close" class="popup__close-icon" >
+        </button>
+        <h3 class="popup__title popup__title-place">Обновить аватар</h3>
+        <form id="popup-img-avatar" name="edit-avatar" class="popup__edit">
+          <input id="input-src-avatar" type="text" name="about" class="popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
+          <button id="add-button-img-avatar" type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>
         </form>
       </div>
     </div>
