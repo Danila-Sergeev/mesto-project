@@ -21,29 +21,24 @@ const popupImgName = document.querySelector('.popup_img_name');
 
 
 // Открытие - закрытие попап:
-function closePopup(popup, popupClass){
-  popup.classList.remove(popupClass);
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 bottonEditProfile.addEventListener('click', () => {
-  popup.classList.add('popup_opened') ;
+  openPopup(popup);
   popupInfoName.setAttribute('value', profileName.textContent);
   popupInfoAbout.setAttribute('value', profileStatus.textContent);
 });
-function KeyEsc(evt){
-  closePopup(popup,'popup_opened');
-  if (evt.key === 'Escape'){
-    closePopup(popup,'popup_opened');
-  }
-}
-buttonClosePopup.addEventListener('click', () =>
-  closePopup(popup,'popup_opened')
-);
 
-profileButtonAdd.addEventListener('click', () =>  popupPlace.classList.add('popup_opened'));
+buttonClosePopup.addEventListener('click', () => closePopup(popup));
 
-buttonPlaceClose.addEventListener('click', () =>
-  closePopup(popup,'popup_opened')
-);
+profileButtonAdd.addEventListener('click', () => openPopup(popupPlace));
+
+buttonPlaceClose.addEventListener('click', () => closePopup(popupPlace));
+
 
 // Редактирование профиля через форму:
 function formSubmitHandler (evt) {
