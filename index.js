@@ -27,6 +27,9 @@ const avatar = document.querySelector('.profile__avatar');
 const avatarEdit = document.querySelector('.profile__avatar_edit');
 const avatarClose = document.querySelector('#popup-avatar-close');
 const avatarValue = document.querySelector('#input-src-avatar');
+const formProfile = document.forms.editProfile;
+const formCards = document.forms.editCards;
+const formAvatar = document.forms.editAvatar;
 
 
 //нажате кнопки изменения аватара:
@@ -34,6 +37,78 @@ avatar.addEventListener('mouseover', () => {avatarEdit.classList.add('popup_open
 avatar.addEventListener('mouseout', () => {avatarEdit.classList.remove('popup_opened');  avatar.classList.remove('profile__avatar_opacity')});
 avatarEdit.addEventListener('mouseover', () => {avatarEdit.classList.add('popup_opened');  avatar.classList.add('profile__avatar_opacity')});
 avatarEdit.addEventListener('mouseout', () => {avatarEdit.classList.remove('popup_opened'); avatar.classList.remove('profile__avatar_opacity')});
+
+//Валидация форм
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__edit_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__error-massage_active');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__edit_type_error');
+  errorElement.classList.remove('popup__error-massage_active');
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  }
+  else {
+    inputElement.setCustomValidity("");
+  }
+  
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return (!inputElement.validity.valid);
+  })
+};
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)){
+    buttonElement.disabled = true;
+    buttonElement.classList.add('popup__save_inactive');
+  }
+  else{
+    buttonElement.disabled = false;
+    buttonElement.classList.remove('popup__save_inactive');
+  }
+}
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__info'));
+  const buttonElement = formElement.querySelector('.popup__save');
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__edit'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+enableValidation();
+
+
+
+
+
 
 // Открытие - закрытие попап:
 function openPopup(popup) {
@@ -90,7 +165,7 @@ function formSubmitHandler (evt) {
 function formSubmitAvatar (evt) {
   evt.preventDefault();
   avatar.setAttribute('src', avatarValue.value);
-  avatarValue.value = '';
+  formAvatar.reset();
 }
 
 formElementAvater.addEventListener('submit', formSubmitAvatar);
@@ -142,8 +217,7 @@ const ImgName = document.querySelector('#input-text-img');
 formElementImg.addEventListener('submit', (evt)=>{
   evt.preventDefault();
   renderCard(linkImg.value, ImgName.value);
-  linkImg.value = '';
-  ImgName.value = '';
+  formCards.reset();
 }
 );
 profileButtonAddImg.addEventListener('click', () => closePopup(popupPlace));

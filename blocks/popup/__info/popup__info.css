@@ -9,7 +9,8 @@
   color: #000000;
   margin-bottom: 34px;
   padding-bottom: 10px;
-}
+  position: relative;
+  }
 @media screen and (max-width: 600px) {
   .popup__info{
     min-width: 238px;

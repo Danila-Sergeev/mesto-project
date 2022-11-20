@@ -54,7 +54,11 @@
 @import url(../blocks/popup/_img/_photo/popup_img_photo.css);
 @import url(../blocks/popup/_img/_name/popup_img_name.css);
 @import url(../blocks/popup/__container/_avatar/popup__container_avatar.css);
-
+@import url(../blocks/popup/__edit/_type/popup__edit_type_error.css);
+@import url(../blocks/popup/__error-massage/popup__error-massage.css);
+@import url(../blocks/popup/__error-massage/_active/popup__error-massage_active.css);
+@import url(../blocks/popup/__field/popup__field.css);
+@import url(../blocks/popup/__save/_inactive/popup__save_inactive.css);
 
 
 @import url(../blocks/footer/footer.css);

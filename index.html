@@ -43,10 +43,16 @@
         <button type="button" id="popup-close-icon" class="popup__close-icon" >
         </button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form name="edit-profile" class="popup__edit">
-          <input id="input-name" type="text" name="firstname" class="popup__info popup__info_field_name" placeholder="Имя" required value="">
-          <input id="input-about" type="text" name="about" class="popup__info popup__info_field_about" placeholder="О себе" required value="">
-          <button id="add-button-inf" type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>
+        <form novalidate name="editProfile" class="popup__edit ">
+          <label class="popup__field">
+            <input  data-error-message="поля могут содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" required minlength="2" required maxlength="40" id="input-name" type="text" name="firstname" class="popup__info popup__info_field_name  " placeholder="Имя" required value="">
+            <span class="input-name-error popup__error-massage"></span>
+          </label>
+          <label class="popup__field">
+            <input pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" data-error-message="поля могут содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы"  required minlength="2" required maxlength="200" id="input-about" type="text" name="about" class="popup__info popup__info_field_about  " placeholder="О себе" required value="">
+            <span class="input-about-error popup__error-massage"></span>
+          </label>
+          <button id="add-button-inf" type="submit" name="save" class="popup__save popup__save_inactive" aria-label="Close">Сохранить</button>
         </form>
       </div>
     </div>
@@ -55,20 +61,29 @@
         <button type="button" id="popup-close-icon-place" class="popup__close-icon" >
         </button>
         <h3 class="popup__title popup__title-place">Новое место</h3>
-        <form id="popup-img-cont" name="edit-profile" class="popup__edit">
-          <input id="input-text-img" type="text" name="firstname" class="popup__info popup__info_field_name" placeholder="Название" required >
-          <input id="input-src" type="text" name="about" class="popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
+        <form novalidate id="popup-img-cont" name="editCards" class="popup__edit">
+          <label class="popup__field">
+            <input data-error-message="поля могут содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" required minlength="2" required maxlength="30" id="input-text-img" type="text" name="firstname" class=" popup__info popup__info_field_name" placeholder="Название" required >
+            <span class="input-text-img-error popup__error-massage"></span>
+          </label>
+          <label class="popup__field">
+            <input id="input-src" type="url" name="about" class=" popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
+            <span class="input-src-error popup__error-massage "></span>
+          </label>
           <button id="add-button-img" type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>
         </form>
       </div>
     </div>
-    <div id="popup-avatar" class="popup" >
+    <div id="popup-avatar" class="popup">
       <div class="popup__container popup__container_avatar">
         <button type="button" id="popup-avatar-close" class="popup__close-icon" >
         </button>
         <h3 class="popup__title popup__title-place">Обновить аватар</h3>
-        <form id="popup-img-avatar" name="edit-avatar" class="popup__edit">
-          <input id="input-src-avatar" type="text" name="about" class="popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
+        <form novalidate id="popup-img-avatar" name="editAvatar" class="popup__edit">
+          <label class="popup__field">
+            <input id="input-src-avatar" type="url" name="about" class=" popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
+            <span class="input-src-avatar-error popup__error-massage"></span>
+          </label>
           <button id="add-button-img-avatar" type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>
         </form>
       </div>
