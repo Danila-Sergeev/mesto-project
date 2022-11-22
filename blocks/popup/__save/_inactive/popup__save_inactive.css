@@ -4,3 +4,6 @@
   color: #000000;
   opacity: .5;
 }
+.popup__save_inactive:hover{
+  opacity: .5;
+}

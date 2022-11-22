@@ -45,11 +45,11 @@
         <h3 class="popup__title">Редактировать профиль</h3>
         <form novalidate name="editProfile" class="popup__edit ">
           <label class="popup__field">
-            <input  data-error-message="поля могут содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" required minlength="2" required maxlength="40" id="input-name" type="text" name="firstname" class="popup__info popup__info_field_name  " placeholder="Имя" required value="">
+            <input  data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" required minlength="2" required maxlength="40" id="input-name" type="text" name="firstname" class="popup__info popup__info_field_name  " placeholder="Имя" required value="">
             <span class="input-name-error popup__error-massage"></span>
           </label>
           <label class="popup__field">
-            <input pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" data-error-message="поля могут содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы"  required minlength="2" required maxlength="200" id="input-about" type="text" name="about" class="popup__info popup__info_field_about  " placeholder="О себе" required value="">
+            <input pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"  required minlength="2" required maxlength="200" id="input-about" type="text" name="about" class="popup__info popup__info_field_about  " placeholder="О себе" required value="">
             <span class="input-about-error popup__error-massage"></span>
           </label>
           <button id="add-button-inf" type="submit" name="save" class="popup__save popup__save_inactive" aria-label="Close">Сохранить</button>
@@ -63,7 +63,7 @@
         <h3 class="popup__title popup__title-place">Новое место</h3>
         <form novalidate id="popup-img-cont" name="editCards" class="popup__edit">
           <label class="popup__field">
-            <input data-error-message="поля могут содержать только латинские буквы, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" required minlength="2" required maxlength="30" id="input-text-img" type="text" name="firstname" class=" popup__info popup__info_field_name" placeholder="Название" required >
+            <input data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$" required minlength="2" required maxlength="30" id="input-text-img" type="text" name="firstname" class=" popup__info popup__info_field_name" placeholder="Название" required >
             <span class="input-text-img-error popup__error-massage"></span>
           </label>
           <label class="popup__field">
@@ -108,6 +108,10 @@
     </article>
   </template>
   <script src="./cards.js"></script>
-  <script src="./index.js"></script>
+  <script type="module" src="./index.js"></script>
+  <script type="module" src="./components/validate.js"></script>
+  <script type="module" src="./components/card.js"></script>
+  <script type="module" src="./components/utilits.js"></script>
+  <script type="module" src="./components/modal.js"></script>
 </body>
 </html>

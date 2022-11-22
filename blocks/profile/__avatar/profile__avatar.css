@@ -4,8 +4,15 @@
   height: 120px;
   margin-right: 30px;
   transition: .7s;
+  cursor: pointer;
 }
 
+@media screen and (max-width:1200px){
+  .profile__avatar{
+    width: 190px;
+    height: 120px;
+  }
+}
 @media screen and (max-width:580px){
   .profile__avatar{
     width: 160px;
