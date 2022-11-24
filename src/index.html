@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <meta name="description" content="Социальная сеть для публикаций фото">
     <meta name="keywords" content="Mesto, Картинки, фото">
     <meta name="author" content="Сергеев Данила">
@@ -13,13 +12,13 @@
 <body class="body">
   <div class="page">
     <header class="header page__header">
-      <img src="./images/logo.svg" alt="Лого" class="header__logo">
+      <img alt="Лого" class="header__logo" src= "<%=require('../images/logo.svg')%>">
     </header>
     <main class="content">
       <section class="profile page__profile">
         <div class="profile__person-info">
-          <img src="./images/image.jpg" alt="Фото профиля" class="profile__avatar">
-          <img src="./images/pensel.svg" alt="" class="profile__avatar_edit">
+          <img src= "<%=require('../images/image.jpg')%>" alt="Фото профиля" class="profile__avatar">
+          <img src= "<%=require('../images/pensel.svg')%>"="" class="profile__avatar_edit">
           <div class="profile__info">
             <div class="profile__info-top">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -92,7 +91,7 @@
       <div class="popup_img_container popup__container">
         <button id="popup-img-close" type="button" class="popup__close-icon" ></button>
         <img  alt="" class="popup_img_photo">
-        <p class="popup_img_name">opopopopoopo</p>
+        <p class="popup_img_name"></p>
       </div>
     </div>
   </div>
@@ -107,11 +106,5 @@
       </div>
     </article>
   </template>
-  <script src="./cards.js"></script>
-  <script type="module" src="./index.js"></script>
-  <script type="module" src="./components/validate.js"></script>
-  <script type="module" src="./components/card.js"></script>
-  <script type="module" src="./components/utilits.js"></script>
-  <script type="module" src="./components/modal.js"></script>
 </body>
 </html>

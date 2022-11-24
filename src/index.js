@@ -1,3 +1,12 @@
+
+
+import '../cards.js';
+import '../pages/index.css';
+import './components/card.js';
+import './components/modal.js';
+import './components/utilits.js';
+import './components/validate.js';
+
 const buttonClosePopup = document.querySelector('.popup__close-icon');
 const formElement = document.querySelector('.popup__edit');
 const formElementAvatar = document.querySelector('#popup-img-avatar');
@@ -44,7 +53,6 @@ avatarEdit.addEventListener('mouseout', () => {avatarEdit.classList.remove('popu
 
   formElementAvatar.addEventListener('submit', formSubmitAvatar);
   formElement.addEventListener('submit', formSubmitHandler);
-
 
 
 

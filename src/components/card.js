@@ -5,7 +5,7 @@ const formElementImg = document.querySelector('#popup-img-cont');
 const cardContainer = document.querySelector('.cards-grid');
 const formCards = document.forms.editCards;
 import {closePopup, openPopup, renderCard} from './utilits.js';
-
+import {initialCards} from '../../cards';
 
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
 function addCard(photoLink, placeName){
@@ -36,7 +36,6 @@ function addCard(photoLink, placeName){
 return (cardElement);
 }
 popupImgClose.addEventListener('click',() => closePopup(popupImg));
-
 
 // Добавление 6-ти основных карточек:
 initialCards.forEach(item => {
