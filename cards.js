@@ -6,6 +6,7 @@ import holmogorsky from './images/kholmogorsky-rayon.jpg';
 import baikal from './images/baikal.jpg';
 
 
+
  const initialCards = [
   {
     name: 'Архыз',
