@@ -12,13 +12,15 @@
 <body class="body">
   <div class="page">
     <header class="header page__header">
-      <img alt="Лого" class="header__logo" src= "<%=require('../images/logo.svg')%>">
+      <img alt="Лого" class="header__logo" src= "<%=require('./images/logo.svg')%>">
     </header>
     <main class="content">
       <section class="profile page__profile">
         <div class="profile__person-info">
-          <img src= "<%=require('../images/image.jpg')%>" alt="Фото профиля" class="profile__avatar">
-          <img src= "<%=require('../images/pensel.svg')%>"="" class="profile__avatar_edit">
+          <div class="profile__avatar-block">
+            <img src= "<%=require('./images/image.jpg')%>" alt="Фото профиля" class="profile__avatar">
+            <img src= "<%=require('./images/pensel.svg')%>" class="profile__avatar_edit">
+          </div>
           <div class="profile__info">
             <div class="profile__info-top">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -80,7 +82,7 @@
         <h3 class="popup__title popup__title-place">Обновить аватар</h3>
         <form novalidate id="popup-img-avatar" name="editAvatar" class="popup__edit">
           <label class="popup__field">
-            <input id="input-src-avatar" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="^[a-zA-Z[А-Яа-яЁё\s\-]+$"  type="url" name="about" class=" popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
+            <input id="input-src-avatar" type="url" name="about" class=" popup__info popup__info_field_about" placeholder="Ссылка на картинку" required>
             <span class="input-src-avatar-error popup__error-massage"></span>
           </label>
           <button id="add-button-img-avatar" type="submit" name="save" class="popup__save" aria-label="Close">Сохранить</button>

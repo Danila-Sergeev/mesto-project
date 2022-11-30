@@ -24,7 +24,7 @@
 @import url(../blocks/profile/__edit/profile__edit.css);
 @import url(../blocks/profile/__info-top/profile__info-top.css);
 @import url(../blocks/profile/__avatar/_edit/profile__avatar_edit.css);
-@import url(../blocks/profile/__avatar/_opacity/profile__avatar_opacity.css);
+@import url(../blocks/profile/__avatar-block/profile__avatar-block.css);
 
 @import url(../blocks/cards-grid/cards-grid.css);
 @import url(../blocks/card/card.css);
