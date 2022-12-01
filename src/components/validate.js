@@ -54,9 +54,6 @@ const hasInvalidInput = (inputList) => {
 const setEventListeners = (formElement, settings) => {
   const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   const buttonElement = formElement.querySelector(settings.submitButtonSelector);
-  formElement.addEventListener('submit', () => {
-    toggleButtonState(inputList, buttonElement, settings);
-  });
   toggleButtonState(inputList, buttonElement, settings);
   formElement.addEventListener('reset', () => {
     setTimeout(() => {
@@ -80,4 +77,3 @@ const enableValidation = (settings) => {
   });
 };
 enableValidation(settings);
-export{toggleButtonState}

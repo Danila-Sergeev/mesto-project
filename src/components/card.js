@@ -1,10 +1,11 @@
-import { openPopup } from "./utilits";
+import { closePopup, openPopup } from "./utilits";
 
-const popupImg = document.querySelector('.popup_img');
+const popupOpenImg = document.querySelector('.popup_img');
 const cardContainer = document.querySelector('.cards-grid');
-const formCards = document.forms.editCards;
-const popupImgName = document.querySelector('.popup_img_name');
-const popupImgPhoto = document.querySelector('.popup_img_photo');
+const cardsForm = document.forms.editCards;
+const popupOpenImgName = document.querySelector('.popup_img_name');
+const popupOpenImgPhoto = document.querySelector('.popup_img_photo');
+const popupPlace = document.querySelector('#popup-container-place');
 
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
 function addCard(photoLink, placeName){
@@ -27,10 +28,10 @@ function addCard(photoLink, placeName){
 //открытие попапа с картинкой:
 cardElementImg.addEventListener('click',(evt)=>{
   evt.preventDefault();
-  openPopup(popupImg);
-  popupImgName.textContent = placeName;
-  popupImgPhoto.setAttribute('src', photoLink);
-  popupImgPhoto.setAttribute('alt', placeName);
+  openPopup(popupOpenImg);
+  popupOpenImgName.textContent = placeName;
+  popupOpenImgPhoto.setAttribute('src', photoLink);
+  popupOpenImgPhoto.setAttribute('alt', placeName);
 });
 
 return (cardElement);
@@ -43,12 +44,13 @@ function renderCard(photoLink, placeName){
 // Добавление карточки через форму:
 const linkImg = document.querySelector('#input-src');
 const ImgName = document.querySelector('#input-text-img');
-formCards.addEventListener('submit', (evt)=>{
+cardsForm.addEventListener('submit', (evt)=>{
   evt.preventDefault();
   renderCard(linkImg.value, ImgName.value);
-  formCards.reset();
+  cardsForm.reset();
+  closePopup(popupPlace);
 }
 );
 
-export{popupImg, addCard, cardContainer, renderCard};
+export{renderCard, popupPlace};
 
