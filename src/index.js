@@ -6,6 +6,7 @@ import './components/card.js';
 import './components/modal.js';
 import './components/utilits.js';
 import './components/validate.js';
+import './components/server.js'
 
 const profileForm = document.forms.editProfile;
 const buttonOpenCardPopup = document.querySelector('.profile__add-button');
@@ -16,12 +17,7 @@ const popups = document.querySelectorAll('.popup')
 import {profileAvatar, handleProfileFormSubmit,popupAvatar, popupProfile, handleAvatarformSubmit, popupInfoName, popupInfoAbout, profileStatus, profileName, avatarForm} from './components/modal.js';
 import {renderCard, popupPlace} from './components/card.js';
 import {openPopup, closePopup} from './components/utilits.js';
-import {initialCards} from './cards.js';
 
-// Добавление 6-ти основных карточек:
-initialCards.forEach(item => {
-  renderCard(item.link, item.name);
-});
 
 ////открыть закрыть попап
 
@@ -49,4 +45,8 @@ buttonOpenCardPopup.addEventListener('click', () => openPopup(popupPlace));
 //отправка формы
 avatarForm.addEventListener('submit', handleAvatarformSubmit);
 profileForm.addEventListener('submit', handleProfileFormSubmit);
+
+
+
+
 
