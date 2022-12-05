@@ -9,12 +9,7 @@ const popupAvatar = document.querySelector('#popup-avatar');
 const popupProfile = document.querySelector('#popup');
 const avatarForm = document.forms.editAvatar;
 // Редактирование профиля через форму:
-function handleProfileFormSubmit (evt) {
-  evt.preventDefault();
-  profileName.textContent = popupInfoName.value;
-  profileStatus.textContent = popupInfoAbout.value;
-  closePopup(popupProfile);
-}
+
 function handleAvatarformSubmit (evt) {
   evt.preventDefault();
   profileAvatar.setAttribute('src', avatarInputValue.value);
@@ -23,4 +18,4 @@ function handleAvatarformSubmit (evt) {
 }
 
 
-export{profileAvatar,popupAvatar, popupProfile,  handleProfileFormSubmit, handleAvatarformSubmit, popupInfoAbout, popupInfoName, profileName ,profileStatus, avatarForm};
+export{profileAvatar,popupAvatar, popupProfile,  handleAvatarformSubmit, popupInfoAbout, popupInfoName, profileName ,profileStatus, avatarForm};

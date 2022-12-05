@@ -1,0 +1,6 @@
+.card__box-like{
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

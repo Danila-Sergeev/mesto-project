@@ -5,6 +5,7 @@
   margin-right: 30px;
   transition: .7s;
   cursor: pointer;
+  object-fit: cover
 }
 .profile__avatar:hover + .profile__avatar_edit{
   opacity: 1;
