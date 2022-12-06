@@ -12,7 +12,8 @@ const profileForm = document.forms.editProfile;
 const buttonOpenCardPopup = document.querySelector('.profile__add-button');
 const buttonOpenEditPopup = document.querySelector('.profile__edit');
 const avatarEditButton = document.querySelector('.profile__avatar_edit');
-const popups = document.querySelectorAll('.popup')
+const popups = document.querySelectorAll('.popup');
+
 
 import {profileAvatar, handleAvatarformSubmit, popupAvatar, popupProfile, popupInfoName, popupInfoAbout, profileStatus, profileName, avatarForm} from './components/modal.js';
 import {handleProfileFormSubmit, popupPlace} from './components/server.js'

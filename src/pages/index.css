@@ -61,6 +61,9 @@
 @import url(../blocks/popup/__error-massage/_active/popup__error-massage_active.css);
 @import url(../blocks/popup/__field/popup__field.css);
 @import url(../blocks/popup/__save/_inactive/popup__save_inactive.css);
+@import url(../blocks/popup/__container/_confirm/popup__container_confirm.css);
+@import url(../blocks/popup/__edit/_confirm/popup__edit_confirm.css);
+@import url(../blocks/popup/__save/_confirm/popup__save_confirm.css);
 
 
 @import url(../blocks/footer/footer.css);

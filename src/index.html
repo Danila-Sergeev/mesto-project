@@ -96,6 +96,15 @@
         <p class="popup_img_name"></p>
       </div>
     </div>
+    <div id="popup-confirm" class="popup">
+      <div class="popup__container popup__container_confirm">
+        <button type="button" id="popup-confirm-close" class="popup__close-icon" ></button>
+        <h3 class="popup__title popup__title-place">Вы увернены?</h3>
+        <form novalidate id="form-confirm" name="confirmDelete" class="popup__edit popup__edit_confirm">
+          <button id="confirm-delete-button" type="submit" name="save" class="popup__save popup__save_confirm" aria-label="Close">Да</button>
+        </form>
+      </div>
+    </div>
   </div>
   <template id="card-template">
     <article class="card">

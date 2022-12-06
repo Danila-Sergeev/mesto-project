@@ -29,33 +29,36 @@ cardsForm.addEventListener('submit', (evt)=>{
   closePopup(popupPlace);
 });
 
-fetch('https://nomoreparties.co/v1/plus-cohort-17/cards', {
+/* Добавление обязательных карточек, функция смены информации о пользователе,
+  функция удаления своих карточек: */
+Promise.all([
+  fetch('https://nomoreparties.co/v1/plus-cohort-17/users/me ', {
+    headers: {
+      authorization: 'c8ce4a71-bdd1-470d-8928-726e47ccdf35',
+      'Content-Type': 'application/json'
+    },
+  }),
+  fetch('https://nomoreparties.co/v1/plus-cohort-17/cards', {
   headers: {
     authorization: 'c8ce4a71-bdd1-470d-8928-726e47ccdf35',
     'Content-Type' : 'application/json'
   }
-})
-  .then(res =>{ return res.json()})
-  .then((cards) => {
-    for (let i = 0; i < cards.length; i++){
+  })
+])
+.then(arr => Promise.all(arr.map(res => res.json())))
+.then(([info, cards]) => {
+  for (let i = cards.length -1; i > 0; i--){
+    if (cards[i].owner.name === info.name){
+      renderCard(cards[i].link, cards[i].name, cards[i].likes.length);
+    }
+    else{
       renderSetCard(cards[i].link, cards[i].name, cards[i].likes.length);
     }
-});
-
-
-fetch('https://nomoreparties.co/v1/plus-cohort-17/users/me', {
-  headers: {
-    authorization: 'c8ce4a71-bdd1-470d-8928-726e47ccdf35',
-    'Content-Type' : 'application/json'
   }
-})
-.then(res =>{ return res.json()})
-  .then((info) => {
-    profileName.textContent = info.name;
-    profileStatus.textContent = info.about;
-    profileAvatar.setAttribute('src', info.avatar);
-  })
-
+  profileName.textContent = info.name;
+  profileStatus.textContent = info.about;
+  profileAvatar.setAttribute('src', info.avatar);
+});
 
   // Редактирование профиля через форму:
 function handleProfileFormSubmit (evt) {
@@ -79,6 +82,7 @@ function handleProfileFormSubmit (evt) {
   });
   closePopup(popupProfile);
 }
+
 
 
 export {handleProfileFormSubmit, popupPlace}
