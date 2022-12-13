@@ -6,7 +6,7 @@ import './components/card.js';
 import './components/modal.js';
 import './components/utilits.js';
 import './components/validate.js';
-import './components/server.js'
+import './components/api.js'
 
 const profileForm = document.forms.editProfile;
 const buttonOpenCardPopup = document.querySelector('.profile__add-button');
@@ -16,7 +16,7 @@ const popups = document.querySelectorAll('.popup');
 
 
 import {profileAvatar, handleAvatarformSubmit, popupAvatar, popupProfile, popupInfoName, popupInfoAbout, profileStatus, profileName, avatarForm} from './components/modal.js';
-import {handleProfileFormSubmit, popupPlace} from './components/server.js'
+import {handleProfileFormSubmit, popupPlace} from './components/api.js'
 import {openPopup, closePopup} from './components/utilits.js';
 
 
