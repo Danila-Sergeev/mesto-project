@@ -14,14 +14,10 @@ const buttonOpenEditPopup = document.querySelector('.profile__edit');
 const avatarEditButton = document.querySelector('.profile__avatar_edit');
 const popups = document.querySelectorAll('.popup');
 
-
-import {profileAvatar, handleAvatarformSubmit, popupAvatar, popupProfile, popupInfoName, popupInfoAbout, profileStatus, profileName, avatarForm} from './components/modal.js';
-import {handleProfileFormSubmit, popupPlace} from './components/api.js'
+import {popupPlace, handleProfileFormSubmit, handleAvatarformSubmit, profileAvatar, popupAvatar, popupProfile, popupInfoName, popupInfoAbout, profileStatus, profileName, avatarForm} from './components/api.js'
 import {openPopup, closePopup} from './components/utilits.js';
 
-
-////открыть закрыть попап
-
+////открыть закрыть попап:
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
         if (evt.target.classList.contains('popup_opened')) {
@@ -43,7 +39,7 @@ avatarEditButton.addEventListener('click', () => openPopup(popupAvatar));
 profileAvatar.addEventListener('click', () => openPopup(popupAvatar));
 buttonOpenCardPopup.addEventListener('click', () => openPopup(popupPlace));
 
-//отправка формы
+//отправка формы:
 avatarForm.addEventListener('submit', handleAvatarformSubmit);
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 

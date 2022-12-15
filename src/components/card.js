@@ -53,6 +53,9 @@ cardElementImg.addEventListener('click',(evt)=>{
 
 return (cardElement);
 }
+function renderCard(photoLink, placeName, placeLikes, cardId){
+  cardContainer.prepend(addCard(photoLink, placeName, placeLikes, cardId));
+}
 
 //Загрузка уже созданной карточки
 function addSetCard(photoLink, placeName, placeLikes,cardId){
@@ -88,9 +91,6 @@ function addSetCard(photoLink, placeName, placeLikes,cardId){
 cardElement.querySelector('.card__trash').remove();
 
 return (cardElement);
-}
-function renderCard(photoLink, placeName, placeLikes, cardId){
-  cardContainer.prepend(addCard(photoLink, placeName, placeLikes, cardId));
 }
 function renderSetCard(photoLink, placeName, placeLikes, cardId){
   cardContainer.prepend(addSetCard(photoLink, placeName, placeLikes, cardId));
