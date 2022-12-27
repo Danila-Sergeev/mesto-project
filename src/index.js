@@ -14,8 +14,11 @@ const buttonOpenEditPopup = document.querySelector('.profile__edit');
 const avatarEditButton = document.querySelector('.profile__avatar_edit');
 const popups = document.querySelectorAll('.popup');
 
-import {popupPlace, handleProfileFormSubmit, handleAvatarformSubmit, profileAvatar, popupAvatar, popupProfile, popupInfoName, popupInfoAbout, profileStatus, profileName, avatarForm} from './components/api.js'
+
+import {popupInfoName, popupInfoAbout} from './components/api.js';
 import {openPopup, closePopup} from './components/utilits.js';
+import {handleAvatarformSubmit, handleProfileFormSubmit, popupPlace, popupAvatar, popupProfile, avatarForm} from './components/modal.js';
+import {profileName, profileStatus, profileAvatar} from './components/card.js';
 
 ////открыть закрыть попап:
 popups.forEach((popup) => {
