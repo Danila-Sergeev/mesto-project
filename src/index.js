@@ -15,9 +15,8 @@ const avatarEditButton = document.querySelector('.profile__avatar_edit');
 const popups = document.querySelectorAll('.popup');
 
 
-import {popupInfoName, popupInfoAbout} from './components/api.js';
-import {openPopup, closePopup} from './components/utilits.js';
-import {handleAvatarformSubmit, handleProfileFormSubmit, popupPlace, popupAvatar, popupProfile, avatarForm} from './components/modal.js';
+import {popupInfoName, popupInfoAbout, renderLoading, patchUserInfo, patchAvatar} from './components/api.js';
+import {popupPlace, popupAvatar, popupProfile, avatarForm, openPopup, closePopup} from './components/modal.js';
 import {profileName, profileStatus, profileAvatar} from './components/card.js';
 
 ////открыть закрыть попап:
@@ -27,15 +26,15 @@ popups.forEach((popup) => {
             closePopup(popup)
         }
         if (evt.target.classList.contains('popup__close-icon')) {
-          closePopup(popup)
+          closePopup(popup);
         }
     })
 })
 
 buttonOpenEditPopup.addEventListener('click', () => {
   openPopup(popupProfile);
-  popupInfoName.setAttribute('value', profileName.textContent);
-  popupInfoAbout.setAttribute('value', profileStatus.textContent);
+  popupInfoName.value = profileName.textContent;
+  popupInfoAbout.value = profileStatus.textContent;
 });
 
 avatarEditButton.addEventListener('click', () => openPopup(popupAvatar));
@@ -43,8 +42,40 @@ profileAvatar.addEventListener('click', () => openPopup(popupAvatar));
 buttonOpenCardPopup.addEventListener('click', () => openPopup(popupPlace));
 
 //отправка формы:
-avatarForm.addEventListener('submit', handleAvatarformSubmit);
-profileForm.addEventListener('submit', handleProfileFormSubmit);
+avatarForm.addEventListener('submit', function handleAvatarformSubmit (evt) {
+  evt.preventDefault();
+  renderLoading('add-button-img-avatar', true)
+  patchAvatar()
+  .then((info) => {
+  evt.preventDefault();
+  profileAvatar.setAttribute('src', info.avatar);
+  avatarForm.reset();
+  closePopup(popupAvatar);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    renderLoading('add-button-img-avatar', false);
+  })
+});
+profileForm.addEventListener('submit', function handleProfileFormSubmit (evt) {
+  evt.preventDefault();
+  renderLoading('add-button-inf', true);
+  patchUserInfo()
+  .then((info) => {
+  profileName.textContent = info.name;
+  profileStatus.textContent = info.about;
+  profileAvatar.setAttribute('src', info.avatar);
+  closePopup(popupProfile);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    renderLoading('add-button-inf', false);
+  })
+});
 
 
 

@@ -3,6 +3,13 @@ const ImgName = document.querySelector('#input-text-img');
 const popupInfoName = document.querySelector('#input-name');
 const popupInfoAbout = document.querySelector('#input-about');
 const avatarInputValue = document.querySelector('#input-src-avatar');
+const apiConfig = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-17',
+  headers: {
+    authorization: 'c8ce4a71-bdd1-470d-8928-726e47ccdf35',
+    'Content-Type': 'application/json'
+  }
+}
 
 function getUserInfo(){
   return fetch ('https://nomoreparties.co/v1/plus-cohort-17/users/me ', {
@@ -10,6 +17,7 @@ function getUserInfo(){
  })
  .then(res => validation(res))
 }
+
 function getCardsInfo(){
   return fetch('https://nomoreparties.co/v1/plus-cohort-17/cards', {
     headers: apiConfig.headers
@@ -41,14 +49,6 @@ function patchAvatar(){
     })
   })
   .then(res => validation(res))
-}
-
-const apiConfig = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-17',
-  headers: {
-    authorization: 'c8ce4a71-bdd1-470d-8928-726e47ccdf35',
-    'Content-Type': 'application/json'
-  }
 }
 
 function validation(res){
