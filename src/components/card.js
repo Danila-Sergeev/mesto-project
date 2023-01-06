@@ -34,6 +34,7 @@ function addCard(photoLink, placeName, placeLikes, cardId, ownCard){
       for (let i = card.length - 1; i >= 0; i--){
           if(cardId === card[i]._id && card[i].likes.length >= 0 && placeName === card[i].name && photoLink === card[i].link && !evt.target.classList.contains('card__like_status_on')){
             evt.target.classList.add('card__like_status_on');
+            console.log('ioio')
             addCardLike(card[i]._id, info);
             cardElement.querySelector('.card__like-counter').textContent = card[i].likes.length + 1;
           }
@@ -53,13 +54,9 @@ function addCard(photoLink, placeName, placeLikes, cardId, ownCard){
     Promise.all([getUserInfo(), getCardsInfo()])
     .then(([info, cards]) => {
       for (let i = cards.length -1; i >= 0; i--){
-        if (JSON.stringify(cards[i].likes[0]) === JSON.stringify(info)){
-          console.log( JSON.stringify(info));
-          console.log(JSON.stringify(cards[i].likes[0]));
+        for (let j = 0; j <= JSON.stringify(cards[i].likes.length); j++)
+        if (JSON.stringify(cards[i].likes[j]) === JSON.stringify(info) && placeName === cards[i].name){
           cardElement.querySelector('.card__like').classList.add('card__like_status_on');
-        }
-        else{
-
         }
       }
 
