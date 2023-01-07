@@ -10,6 +10,7 @@ const profileName = document.querySelector('.profile__name');
 const profileStatus = document.querySelector('.profile__status');
 const profileAvatar = document.querySelector('.profile__avatar');
 const cardTemplate = document.querySelector('#card-template').content;
+const closeConfirmPopup = document.querySelector('#popup-confirm-close');
 const confirmDeleteForm = document.forms.confirmDelete;
 
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
@@ -70,27 +71,27 @@ function addCard(photoLink, placeName, placeLikes, cardId, ownCard){
   function deletingCard(){
     cardElementTrash.addEventListener('click', () => {
       openPopup(popupConfirm);
-      confirmDeleteForm.addEventListener('submit', (evt) =>{
-        evt.preventDefault();
-        renderLoadingForDeleteCard('confirm-delete-button', true);
-        getCardsInfo()
-        .then((card) => {
+      getCardsInfo()
+      .then((card) => {
           for (let i = card.length -1; i >= 0; i--){
             if (placeName === card[i].name && photoLink === card[i].link && cardId === card[i]._id){
-              deleteCard(card[i]._id);
-              cardElement.remove();
-              closePopup(popupConfirm);
+              confirmDeleteForm.addEventListener('submit', (evt) =>{
+                evt.preventDefault();
+                renderLoadingForDeleteCard('confirm-delete-button', true);
+                deleteCard(card[i]._id);
+                cardElement.remove();
+                closePopup(popupConfirm);
+              })
             }
           }
-          })
-          .catch((err) => {
-            console.error(err);
-          })
-          .finally(() => {
-            renderLoadingForDeleteCard('confirm-delete-button', false)
-          })
-        });
-    });
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+        .finally(() => {
+          renderLoadingForDeleteCard('confirm-delete-button', false)
+        })
+      });
   }
 
   if (ownCard){
