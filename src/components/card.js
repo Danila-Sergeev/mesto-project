@@ -14,7 +14,7 @@ const closeConfirmPopup = document.querySelector('#popup-confirm-close');
 const confirmDeleteForm = document.forms.confirmDelete;
 
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
-function addCard(photoLink, placeName, placeLikes, cardId, ownCard){
+function addCard(photoLink, placeName, placeLikesLength, placeLike, cardId, ownCard, info){
 
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardElementImg = cardElement.querySelector('.card__img');
@@ -25,81 +25,55 @@ function addCard(photoLink, placeName, placeLikes, cardId, ownCard){
   //передача значений с попапа:
   cardElementImg.setAttribute('src', photoLink);
   cardElement.querySelector('.card__name').textContent = placeName;
-  cardElement.querySelector('.card__like-counter').textContent = placeLikes;
+  cardElement.querySelector('.card__like-counter').textContent = placeLikesLength;
   cardElementImg.setAttribute('alt', placeName);
 
 // Добавление/удаление лайка:
-  cardElement.querySelector('.card__like').addEventListener('click', (evt) => {
-    Promise.all([getUserInfo(), getCardsInfo()])
-    .then(([info, card]) => {
-      for (let i = card.length - 1; i >= 0; i--){
-          if(cardId === card[i]._id && card[i].likes.length >= 0 && placeName === card[i].name && photoLink === card[i].link && !evt.target.classList.contains('card__like_status_on')){
-            evt.target.classList.add('card__like_status_on');
-            console.log('ioio')
-            addCardLike(card[i]._id, info);
-            cardElement.querySelector('.card__like-counter').textContent = card[i].likes.length + 1;
-          }
-          else if(cardId === card[i]._id && card[i].likes.length >= 0 && placeName === card[i].name && photoLink === card[i].link && evt.target.classList.contains('card__like_status_on')){
-            evt.target.classList.remove('card__like_status_on');
-            deleteCardLike(card[i]._id);
-            cardElement.querySelector('.card__like-counter').textContent = card[i].likes.length - 1;
-        }
-      }
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-  })
+
+  cardElement.querySelector('.card__like').addEventListener('mousedown', (evt) => {
+    if (!evt.target.classList.contains('card__like_status_on') ) {
+      console.log(cardElement.querySelector('.card__like-counter').textContent)
+      cardElement.querySelector('.card__like-counter').textContent = Number(cardElement.querySelector('.card__like-counter').textContent) + 1;
+      evt.target.classList.add('card__like_status_on');
+      addCardLike(cardId, info);
+    }
+
+    else if (evt.target.classList.contains('card__like_status_on') ) {
+      console.log(cardElement.querySelector('.card__like-counter').textContent)
+      cardElement.querySelector('.card__like-counter').textContent = Number(cardElement.querySelector('.card__like-counter').textContent) - 1;
+      evt.target.classList.remove('card__like_status_on');
+      deleteCardLike(cardId, info);
+
+    }
+
+    })
   //Проверка на наличие лайка:
   if (cardElement.querySelector('.card__like-counter').textContent > 0){
-    Promise.all([getUserInfo(), getCardsInfo()])
-    .then(([info, cards]) => {
-      for (let i = cards.length -1; i >= 0; i--){
-        for (let j = 0; j <= JSON.stringify(cards[i].likes.length); j++)
-        if (JSON.stringify(cards[i].likes[j]) === JSON.stringify(info) && placeName === cards[i].name){
+        for (let j = 0; j <= JSON.stringify(placeLikesLength); j++)
+        if (JSON.stringify(placeLike[j]) === JSON.stringify(info)){
           cardElement.querySelector('.card__like').classList.add('card__like_status_on');
         }
       }
 
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-  }
 
   //удаление карточки с сервера:
   function deletingCard(){
-    cardElementTrash.addEventListener('click', () => {
-      openPopup(popupConfirm);
-      getCardsInfo()
-      .then((card) => {
-          for (let i = card.length -1; i >= 0; i--){
-            if (placeName === card[i].name && photoLink === card[i].link && cardId === card[i]._id){
-              confirmDeleteForm.addEventListener('submit', (evt) =>{
-                evt.preventDefault();
-                renderLoadingForDeleteCard('confirm-delete-button', true);
-                deleteCard(card[i]._id);
-                cardElement.remove();
-                closePopup(popupConfirm);
-              })
-            }
-          }
+    if (ownCard){
+      cardElementTrash.addEventListener('click', () => {
+        openPopup(popupConfirm);
+        confirmDeleteForm.addEventListener('submit', (evt) =>{
+          evt.preventDefault();
+          renderLoadingForDeleteCard('confirm-delete-button', true);
+          deleteCard(cardId);
+          cardElement.remove();
         })
-        .catch((err) => {
-          console.error(err);
-        })
-        .finally(() => {
-          renderLoadingForDeleteCard('confirm-delete-button', false)
-        })
-      });
-  }
-
-  if (ownCard){
-    deletingCard();
-  }
-  else{
+      })
+    }
+    else{
     cardElement.querySelector('.card__trash').remove();
+   }
   }
+deletingCard()
 
 //открытие попапа с картинкой:
 cardElementImg.addEventListener('click',(evt)=>{
@@ -112,8 +86,8 @@ cardElementImg.addEventListener('click',(evt)=>{
 
 return (cardElement);
 }
-function renderCard(photoLink, placeName, placeLikes, cardId, ownCard){
-  cardContainer.prepend(addCard(photoLink, placeName, placeLikes, cardId, ownCard));
+function renderCard(photoLink, placeName, placeLikesLength, placeLike, cardId, ownCard, info){
+  cardContainer.prepend(addCard(photoLink, placeName, placeLikesLength, placeLike, cardId, ownCard, info));
 }
 
 
@@ -122,10 +96,10 @@ function renderCards(){
     .then(([info, cards]) => {
       for (let i = cards.length -1; i >= 0; i--){
         if (cards[i].owner.name === info.name){
-          renderCard(cards[i].link, cards[i].name, cards[i].likes.length, cards[i]._id, true);
+          renderCard(cards[i].link, cards[i].name, cards[i].likes.length, cards[i].likes, cards[i]._id, true, info);
         }
         else{
-          renderCard(cards[i].link, cards[i].name, cards[i].likes.length, cards[i]._id, false);
+          renderCard(cards[i].link, cards[i].name, cards[i].likes.length, cards[i].likes, cards[i]._id, false, info);
         }
       }
       profileName.textContent = info.name;

@@ -1,3 +1,5 @@
+import { closePopup, openPopup } from "./modal.js";
+import { popupConfirm } from "./card.js";
 const linkImg = document.querySelector('#input-src');
 const ImgName = document.querySelector('#input-text-img');
 const popupInfoName = document.querySelector('#input-name');
@@ -63,7 +65,14 @@ function deleteCard(cardId){
     method: 'DELETE',
     headers: apiConfig.headers
   })
-  .then((res) => validation(res))
+  .then((res) =>{
+    validation(res)
+    renderLoadingForDeleteCard('confirm-delete-button', true);
+  })
+  .finally(() => {
+    renderLoadingForDeleteCard('confirm-delete-button', false)
+    closePopup(popupConfirm);
+  })
 }
 
 //Функция удаления лайка на карточку

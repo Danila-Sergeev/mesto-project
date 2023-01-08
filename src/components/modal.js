@@ -30,7 +30,7 @@ cardsForm.addEventListener('submit', (evt)=>{
   renderLoading('add-button-img', true)
   additionCardsByForm()
   .then((card) => {
-    renderCard(card.link, card.name, card.likes.length, card._id, true);
+    renderCard(card.link, card.name, card.likes.length, card.likes, card._id, true);
     cardsForm.reset();
     closePopup(popupPlace);
     })
