@@ -25,6 +25,7 @@ function addCard(
   const cardElementImg = cardElement.querySelector(".card__img");
   const cardElementTrash = cardElement.querySelector(".card__trash");
   const cardLikeCounter = cardElement.querySelector(".card__like-counter");
+  const cardLike = cardElement.querySelector(".card__like");
 
   //передача значений с попапа:
   cardElementImg.setAttribute("src", photoLink);
@@ -34,9 +35,9 @@ function addCard(
 
   // Добавление/удаление лайка:
 
-  cardElement.querySelector(".card__like").addEventListener("click", (evt) => {
+  cardLike.addEventListener("click", (evt) => {
     if (!evt.target.classList.contains("card__like_status_on")) {
-      addCardLike(cardId, info)
+      addCardLike(cardId)
         .then(() => {
           cardLikeCounter.textContent = Number(cardLikeCounter.textContent) + 1;
           evt.target.classList.add("card__like_status_on");
@@ -60,9 +61,7 @@ function addCard(
   if (cardLikeCounter.textContent > 0) {
     for (let j = 0; j <= placeLikesLength; j++) {
       if (placeLike[j] !== undefined && placeLike[j]._id === info._id) {
-        cardElement
-          .querySelector(".card__like")
-          .classList.add("card__like_status_on");
+        cardLike.classList.add("card__like_status_on");
       }
     }
   }

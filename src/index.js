@@ -13,10 +13,13 @@ const popups = document.querySelectorAll(".popup");
 const popupInfoName = document.querySelector("#input-name");
 const popupInfoAbout = document.querySelector("#input-about");
 const avatarInputValue = document.querySelector("#input-src-avatar");
-const avatarForm = document.forms.editAvatar;
 const linkImg = document.querySelector("#input-src");
 const ImgName = document.querySelector("#input-text-img");
+const popupPlace = document.querySelector("#popup-container-place");
+const popupAvatar = document.querySelector("#popup-avatar");
+const popupProfile = document.querySelector("#popup");
 const cardsForm = document.forms.editCards;
+const avatarForm = document.forms.editAvatar;
 
 import {
   patchUserInfo,
@@ -25,14 +28,7 @@ import {
   getCardsInfo,
   additionCardsByForm,
 } from "./components/api.js";
-import {
-  popupPlace,
-  popupAvatar,
-  popupProfile,
-  openPopup,
-  closePopup,
-  renderLoading,
-} from "./components/modal.js";
+import { openPopup, closePopup, renderLoading } from "./components/modal.js";
 import {
   profileName,
   profileStatus,
@@ -44,29 +40,30 @@ import {
 function renderCards() {
   Promise.all([getUserInfo(), getCardsInfo()])
     .then(([info, cards]) => {
-      for (let i = cards.length - 1; i >= 0; i--) {
-        if (cards[i].owner._id === info._id) {
+      cards.reverse().forEach((element) => {
+        if (element.owner._id === info._id) {
           renderCard(
-            cards[i].link,
-            cards[i].name,
-            cards[i].likes.length,
-            cards[i].likes,
-            cards[i]._id,
+            element.link,
+            element.name,
+            element.likes.length,
+            element.likes,
+            element._id,
             true,
             info
           );
         } else {
           renderCard(
-            cards[i].link,
-            cards[i].name,
-            cards[i].likes.length,
-            cards[i].likes,
-            cards[i]._id,
+            element.link,
+            element.name,
+            element.likes.length,
+            element.likes,
+            element._id,
             false,
             info
           );
         }
-      }
+      });
+
       profileName.textContent = info.name;
       profileStatus.textContent = info.about;
       profileAvatar.setAttribute("src", info.avatar);
@@ -80,8 +77,8 @@ renderCards();
 //Добавление карточки через форму:
 cardsForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  renderLoading("add-button-img", true);
-  additionCardsByForm(ImgName, linkImg)
+  renderLoading("add-button-img", true, "Создать");
+  additionCardsByForm(ImgName.value, linkImg.value)
     .then((card) => {
       renderCard(
         card.link,
@@ -98,7 +95,7 @@ cardsForm.addEventListener("submit", (evt) => {
       console.error(err);
     })
     .finally(() => {
-      renderLoading("add-button-img", false);
+      renderLoading("add-button-img", false, "Создать");
     });
 });
 
@@ -127,8 +124,8 @@ buttonOpenCardPopup.addEventListener("click", () => openPopup(popupPlace));
 //отправка формы:
 avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
   evt.preventDefault();
-  renderLoading("add-button-img-avatar", true);
-  patchAvatar(avatarInputValue)
+  renderLoading("add-button-img-avatar", true, "Сохранить");
+  patchAvatar(avatarInputValue.value)
     .then((info) => {
       profileAvatar.setAttribute("src", info.avatar);
       avatarForm.reset();
@@ -138,13 +135,13 @@ avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
       console.error(err);
     })
     .finally(() => {
-      renderLoading("add-button-img-avatar", false);
+      renderLoading("add-button-img-avatar", false, "Сохранить");
     });
 });
 profileForm.addEventListener("submit", function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  renderLoading("add-button-inf", true);
-  patchUserInfo(popupInfoName, popupInfoAbout)
+  renderLoading("add-button-inf", true, "Сохранить");
+  patchUserInfo(popupInfoName.value, popupInfoAbout.value)
     .then((info) => {
       profileName.textContent = info.name;
       profileStatus.textContent = info.about;
@@ -155,6 +152,6 @@ profileForm.addEventListener("submit", function handleProfileFormSubmit(evt) {
       console.error(err);
     })
     .finally(() => {
-      renderLoading("add-button-inf", false);
+      renderLoading("add-button-inf", false, "Сохранить");
     });
 });
