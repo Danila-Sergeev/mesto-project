@@ -21,13 +21,8 @@ const popupProfile = document.querySelector("#popup");
 const cardsForm = document.forms.editCards;
 const avatarForm = document.forms.editAvatar;
 
-import {
-  patchUserInfo,
-  patchAvatar,
-  getUserInfo,
-  getCardsInfo,
-  additionCardsByForm,
-} from "./components/api.js";
+import { apiConfig } from "./components/constants.js";
+import { api } from "./components/api.js";
 import { openPopup, closePopup, renderLoading } from "./components/modal.js";
 import {
   profileName,
@@ -38,7 +33,7 @@ import {
 
 //функция загрезки карточек
 function renderCards() {
-  Promise.all([getUserInfo(), getCardsInfo()])
+  Promise.all([api.getUserInfo(), api.getCardsInfo()])
     .then(([info, cards]) => {
       cards.reverse().forEach((element) => {
         if (element.owner._id === info._id) {
@@ -78,7 +73,8 @@ renderCards();
 cardsForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   renderLoading("add-button-img", true, "Создать");
-  additionCardsByForm(ImgName.value, linkImg.value)
+  api
+    .additionCardsByForm(ImgName.value, linkImg.value)
     .then((card) => {
       renderCard(
         card.link,
@@ -125,7 +121,8 @@ buttonOpenCardPopup.addEventListener("click", () => openPopup(popupPlace));
 avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
   evt.preventDefault();
   renderLoading("add-button-img-avatar", true, "Сохранить");
-  patchAvatar(avatarInputValue.value)
+  api
+    .patchAvatar(avatarInputValue.value)
     .then((info) => {
       profileAvatar.setAttribute("src", info.avatar);
       avatarForm.reset();
@@ -141,7 +138,8 @@ avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
 profileForm.addEventListener("submit", function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   renderLoading("add-button-inf", true, "Сохранить");
-  patchUserInfo(popupInfoName.value, popupInfoAbout.value)
+  api
+    .patchUserInfo(popupInfoName.value, popupInfoAbout.value)
     .then((info) => {
       profileName.textContent = info.name;
       profileStatus.textContent = info.about;

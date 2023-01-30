@@ -1,5 +1,5 @@
 import { openPopup } from "./modal.js";
-import { addCardLike, deleteCardLike, deleteCard } from "./api.js";
+import { api } from "./api.js";
 
 const popupOpenImg = document.querySelector(".popup_img");
 const cardContainer = document.querySelector(".cards-grid");
@@ -37,7 +37,8 @@ function addCard(
 
   cardLike.addEventListener("click", (evt) => {
     if (!evt.target.classList.contains("card__like_status_on")) {
-      addCardLike(cardId)
+      api
+        .addCardLike(cardId)
         .then(() => {
           cardLikeCounter.textContent = Number(cardLikeCounter.textContent) + 1;
           evt.target.classList.add("card__like_status_on");
@@ -46,7 +47,8 @@ function addCard(
           console.error(err);
         });
     } else if (evt.target.classList.contains("card__like_status_on")) {
-      deleteCardLike(cardId, info)
+      api
+        .deleteCardLike(cardId, info)
         .then(() => {
           cardLikeCounter.textContent = Number(cardLikeCounter.textContent) - 1;
           evt.target.classList.remove("card__like_status_on");
@@ -70,7 +72,8 @@ function addCard(
   function deletingCard() {
     if (ownCard) {
       cardElementTrash.addEventListener("click", () => {
-        deleteCard(cardId)
+        api
+          .deleteCard(cardId)
           .then(() => {
             cardElement.remove();
           })

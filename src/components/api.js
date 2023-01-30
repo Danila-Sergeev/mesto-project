@@ -5,101 +5,107 @@ const apiConfig = {
     "Content-Type": "application/json",
   },
 };
-
-function getUserInfo() {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-17/users/me ", {
-    headers: apiConfig.headers,
-  }).then((res) => validation(res));
-}
-
-function getCardsInfo() {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-17/cards", {
-    headers: apiConfig.headers,
-  }).then((res) => validation(res));
-}
-
-function patchUserInfo(nameValue, abouValue) {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-17/users/me ", {
-    method: "PATCH",
-    headers: apiConfig.headers,
-    body: JSON.stringify({
-      name: nameValue,
-      about: abouValue,
-    }),
-  }).then((res) => validation(res));
-}
-
-function patchAvatar(avatarValue) {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-17/users/me/avatar ", {
-    method: "PATCH",
-    headers: {
-      authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      avatar: avatarValue,
-    }),
-  }).then((res) => validation(res));
-}
-
-function validation(res) {
-  if (!res.ok) {
-    return Promise.reject(`Ошибка: ${res.status}`);
+class Api {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
+    console.log(this._baseUrl);
+    console.log(baseUrl);
+    console.log(this._headers);
+    console.log(headers);
   }
-  return res.json();
-}
-//Функция удаления карточки
-function deleteCard(cardId) {
-  return fetch(`https://nomoreparties.co/v1/plus-cohort-17/cards/${cardId}`, {
-    method: "DELETE",
-    headers: apiConfig.headers,
-  }).then((res) => {
-    validation(res);
-  });
-}
 
-//Функция удаления лайка
-function deleteCardLike(cardLikeId) {
-  return fetch(
-    `https://nomoreparties.co/v1/plus-cohort-17/cards/likes/${cardLikeId}`,
-    {
+  validation(res) {
+    console.log(res);
+    if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
+  }
+
+  getUserInfo() {
+    console.log(this._headers);
+    return fetch("https://nomoreparties.co/v1/plus-cohort-17/users/me", {
+      headers: {
+        authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
+        "Content-Type": "application/json",
+      },
+    }).then((res) => this.validation(res));
+  }
+
+  getCardsInfo() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then((res) => this.validation(res));
+  }
+
+  patchUserInfo(nameValue, abouValue) {
+    return fetch(`${this._baseUrl}/user/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: nameValue,
+        about: abouValue,
+      }),
+    }).then((res) => this.validation(res));
+  }
+
+  patchAvatar(avatarValue) {
+    return fetch(`${this._baseUrl}/user/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: avatarValue,
+      }),
+    }).then((res) => this.validation(res));
+  }
+
+  //Функция удаления карточки
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: apiConfig.headers,
-    }
-  ).then((res) => validation(res));
-}
+    }).then((res) => {
+      this.validation(res);
+    });
+  }
 
-//Функция добавления лайка на карточку
-function addCardLike(cardLikeId) {
-  return fetch(
-    `https://nomoreparties.co/v1/plus-cohort-17/cards/likes/${cardLikeId}`,
-    {
+  //Функция удаления лайка
+  deleteCardLike(cardLikeId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardLikeId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => this.validation(res));
+  }
+
+  //Функция добавления лайка на карточку
+  addCardLike(cardLikeId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardLikeId}`, {
       method: "PUT",
-      headers: apiConfig.headers,
+      headers: this._headers,
       body: JSON.stringify(),
-    }
-  ).then((res) => validation(res));
-}
+    }).then((res) => this.validation(res));
+  }
 
-// Функция добавления карточки через форму:
-function additionCardsByForm(nameValue, linkValue) {
-  return fetch("https://nomoreparties.co/v1/plus-cohort-17/cards", {
-    method: "POST",
-    headers: apiConfig.headers,
-    body: JSON.stringify({
-      name: nameValue,
-      link: linkValue,
-    }),
-  }).then((res) => validation(res));
+  // Функция добавления карточки через форму:
+  additionCardsByForm(nameValue, linkValue) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: nameValue,
+        link: linkValue,
+      }),
+    }).then((res) => this.validation(res));
+  }
 }
-
-export {
-  additionCardsByForm,
-  addCardLike,
-  deleteCardLike,
-  getUserInfo,
-  getCardsInfo,
-  deleteCard,
-  patchUserInfo,
-  patchAvatar,
-};
+export const api = new Api({
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-17",
+  headers: {
+    authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
+    "Content-Type": "application/json",
+  },
+});
