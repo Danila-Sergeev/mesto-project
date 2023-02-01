@@ -11,6 +11,73 @@ const profileStatus = document.querySelector(".profile__status");
 const profileAvatar = document.querySelector(".profile__avatar");
 const cardTemplate = document.querySelector("#card-template").content;
 
+export class Card {
+  constructor({photoLink, placeName, placeLikesLength, placeLike, cardId, ownCard, info}, handleCardClick, selector) {
+    console.log(selector)
+    this._photoLink = photoLink, 
+    this._placeName = placeName, 
+    this._placeLikesLength = placeLikesLength, 
+    this._placeLike = placeLike, 
+    this._cardId = cardId, 
+    this._ownCard = ownCard, 
+    this._info = info,
+    this._handleCardClick = handleCardClick, 
+    this._selector = selector
+  }
+
+_getTemplate() {
+  const cardTemplate = document
+    .querySelector(this._selector)
+    .content
+    .querySelector(".card")
+    .cloneNode(true)
+
+    return cardTemplate
+}
+
+  _handleLikeClick(evt) {
+    if (!evt.target.classList.contains("card__like_status_on")) {
+      api
+        .addCardLike(cardId)
+        .then(() => {
+          cardLikeCounter.textContent = Number(cardLikeCounter.textContent) + 1;
+          evt.target.classList.add("card__like_status_on");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else if (evt.target.classList.contains("card__like_status_on")) {
+      api
+        .deleteCardLike(cardId, info)
+        .then(() => {
+          cardLikeCounter.textContent = Number(cardLikeCounter.textContent) - 1;
+          evt.target.classList.remove("card__like_status_on");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+  }
+
+  _setEventListeners () {
+    this._element.querySelector('.card__like').addEventListener("click", (evt) => {this._handleLikeClick(evt) })
+  }
+  
+
+  generate() {
+    this._element = this._getTemplate()
+    this._setEventListeners()
+
+    this._element.querySelector('.card__img').textContent = this._photoLink
+    this._element.querySelector('.card__name').textContent = this._placeName
+    this._element.querySelector('.card__like-counter').textContent = this._placeLikesLength
+
+    return this._element
+  }
+}
+
+
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
 function addCard(
   photoLink,
@@ -120,4 +187,4 @@ function renderCard(
   );
 }
 
-export { renderCard, popupConfirm, profileName, profileStatus, profileAvatar };
+export { Card, renderCard, popupConfirm, profileName, profileStatus, profileAvatar };

@@ -21,10 +21,12 @@ const popupProfile = document.querySelector("#popup");
 const cardsForm = document.forms.editCards;
 const avatarForm = document.forms.editAvatar;
 
-import { apiConfig } from "./components/constants.js";
+// TODO - refactor
+const cardContainer = document.querySelector(".cards-grid");
+
 import { api } from "./components/api.js";
 import { openPopup, closePopup, renderLoading } from "./components/modal.js";
-import {
+import { Card,
   profileName,
   profileStatus,
   profileAvatar,
@@ -36,27 +38,32 @@ function renderCards() {
   Promise.all([api.getUserInfo(), api.getCardsInfo()])
     .then(([info, cards]) => {
       cards.reverse().forEach((element) => {
-        if (element.owner._id === info._id) {
-          renderCard(
-            element.link,
-            element.name,
-            element.likes.length,
-            element.likes,
-            element._id,
-            true,
-            info
-          );
-        } else {
-          renderCard(
-            element.link,
-            element.name,
-            element.likes.length,
-            element.likes,
-            element._id,
-            false,
-            info
-          );
-        }
+        const card = new Card({element}, () => {}, '.card-template')  
+
+        cardContainer.prepend( card.generate())
+
+        // if (element.owner._id === info._id) {
+        //   renderCard(
+        //     element.link,
+        //     element.name,
+        //     element.likes.length,
+        //     element.likes,
+        //     element._id,
+        //     true,
+        //     info
+        //   );
+        // } else {
+        //   renderCard(
+        //     element.link,
+        //     element.name,
+        //     element.likes.length,
+        //     element.likes,
+        //     element._id,
+        //     false,
+        //     info
+        //   );
+        // }
+
       });
 
       profileName.textContent = info.name;

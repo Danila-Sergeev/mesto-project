@@ -5,18 +5,14 @@ const apiConfig = {
     "Content-Type": "application/json",
   },
 };
+
 class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    console.log(this._baseUrl);
-    console.log(baseUrl);
-    console.log(this._headers);
-    console.log(headers);
   }
 
   validation(res) {
-    console.log(res);
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
@@ -24,13 +20,11 @@ class Api {
   }
 
   getUserInfo() {
-    console.log(this._headers);
-    return fetch("https://nomoreparties.co/v1/plus-cohort-17/users/me", {
-      headers: {
-        authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
-        "Content-Type": "application/json",
-      },
-    }).then((res) => this.validation(res));
+    return fetch(`${this._baseUrl}/users/me`,
+    {
+      headers: this._headers,
+    }
+    ).then((res) => this.validation(res));
   }
 
   getCardsInfo() {
@@ -102,10 +96,5 @@ class Api {
     }).then((res) => this.validation(res));
   }
 }
-export const api = new Api({
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-17",
-  headers: {
-    authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
-    "Content-Type": "application/json",
-  },
-});
+
+export const api = new Api(apiConfig);
