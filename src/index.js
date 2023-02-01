@@ -26,7 +26,8 @@ const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
 import { openPopup, closePopup, renderLoading } from "./components/modal.js";
-import { Card,
+import {
+  Card,
   profileName,
   profileStatus,
   profileAvatar,
@@ -38,9 +39,15 @@ function renderCards() {
   Promise.all([api.getUserInfo(), api.getCardsInfo()])
     .then(([info, cards]) => {
       cards.reverse().forEach((element) => {
-        const card = new Card({element}, () => {}, '.card-template')  
+        const card = new Card(
+          element,
+          element.owner._id === info._id,
+          info,
+          () => {},
+          "#card-template"
+        );
 
-        cardContainer.prepend( card.generate())
+        cardContainer.prepend(card.generate());
 
         // if (element.owner._id === info._id) {
         //   renderCard(
@@ -63,7 +70,6 @@ function renderCards() {
         //     info
         //   );
         // }
-
       });
 
       profileName.textContent = info.name;
