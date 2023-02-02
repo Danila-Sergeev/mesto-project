@@ -4,6 +4,8 @@ import "./components/modal.js";
 import "./components/utilits.js";
 import "./components/validate.js";
 import "./components/api.js";
+import "./components/section.js";
+import "./components/constants.js";
 
 const profileForm = document.forms.editProfile;
 const buttonOpenCardPopup = document.querySelector(".profile__add-button");
@@ -22,7 +24,7 @@ const cardsForm = document.forms.editCards;
 const avatarForm = document.forms.editAvatar;
 
 // TODO - refactor
-const cardContainer = document.querySelector(".cards-grid");
+//const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
 import { openPopup, closePopup, renderLoading } from "./components/modal.js";
@@ -35,6 +37,7 @@ import {
   profileAvatar,
   renderCard,
 } from "./components/card.js";
+import {Section} from "./components/section.js"
 
 function formValidation(formSelector) {
   const formElements = Array.from(document.querySelectorAll(formSelector));
@@ -49,18 +52,20 @@ formValidation(settings.formSelector);
 function renderCards() {
   Promise.all([api.getUserInfo(), api.getCardsInfo()])
     .then(([info, cards]) => {
-      cards.reverse().forEach((element) => {
-        const card = new Card(
-          element,
-          element.owner._id === info._id,
-          info,
-          () => {},
-          "#card-template"
-        );
 
-        cardContainer.prepend(card.generate());
-      });
-
+      const sec = new Section (
+        cards,
+        (item) => {
+          return new Card(
+            item,
+            item.owner._id === info._id,
+            info,
+            () => {},
+            "#card-template"
+          );  
+        },
+        ".cards-grid")
+      sec.renderItems()
       profileName.textContent = info.name;
       profileStatus.textContent = info.about;
       profileAvatar.setAttribute("src", info.avatar);
