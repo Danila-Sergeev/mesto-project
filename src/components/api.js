@@ -20,11 +20,9 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`,
-    {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }
-    ).then((res) => this.validation(res));
+    }).then((res) => this.validation(res));
   }
 
   getCardsInfo() {
@@ -34,7 +32,7 @@ class Api {
   }
 
   patchUserInfo(nameValue, abouValue) {
-    return fetch(`${this._baseUrl}/user/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
@@ -45,7 +43,7 @@ class Api {
   }
 
   patchAvatar(avatarValue) {
-    return fetch(`${this._baseUrl}/user/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
         authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",

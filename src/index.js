@@ -26,8 +26,8 @@ const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
 import { openPopup, closePopup, renderLoading } from "./components/modal.js";
-import { settings } from "./components/constants.js"
-import { Validator } from "./components/validate"
+import { settings } from "./components/constants.js";
+import { Validator } from "./components/validate.js";
 import {
   Card,
   profileName,
@@ -35,6 +35,15 @@ import {
   profileAvatar,
   renderCard,
 } from "./components/card.js";
+
+function formValidation(formSelector) {
+  const formElements = Array.from(document.querySelectorAll(formSelector));
+  formElements.forEach((formElement) => {
+    const validator = new Validator(settings, formElement);
+    validator.enableValidation();
+  });
+}
+formValidation(settings.formSelector);
 
 //функция загрезки карточек
 function renderCards() {
@@ -50,8 +59,6 @@ function renderCards() {
         );
 
         cardContainer.prepend(card.generate());
-
-        
       });
 
       profileName.textContent = info.name;
