@@ -26,6 +26,8 @@ const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
 import { openPopup, closePopup, renderLoading } from "./components/modal.js";
+import { settings } from "./components/constants.js"
+import { Validator } from "./components/validate"
 import {
   Card,
   profileName,
@@ -49,27 +51,7 @@ function renderCards() {
 
         cardContainer.prepend(card.generate());
 
-        // if (element.owner._id === info._id) {
-        //   renderCard(
-        //     element.link,
-        //     element.name,
-        //     element.likes.length,
-        //     element.likes,
-        //     element._id,
-        //     true,
-        //     info
-        //   );
-        // } else {
-        //   renderCard(
-        //     element.link,
-        //     element.name,
-        //     element.likes.length,
-        //     element.likes,
-        //     element._id,
-        //     false,
-        //     info
-        //   );
-        // }
+        
       });
 
       profileName.textContent = info.name;
