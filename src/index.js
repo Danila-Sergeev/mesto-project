@@ -22,6 +22,13 @@ const popupAvatar = document.querySelector("#popup-avatar");
 const popupProfile = document.querySelector("#popup"); */
 const cardsForm = document.forms.editCards;
 const avatarForm = document.forms.editAvatar;
+const profileName = document.querySelector(".profile__name");
+const profileStatus = document.querySelector(".profile__status");
+const profileAvatar = document.querySelector(".profile__avatar");
+
+
+let sec = null;
+let user = null;
 
 // TODO - refactor
 //const cardContainer = document.querySelector(".cards-grid");
@@ -32,14 +39,27 @@ import { settings } from "./components/constants.js";
 import { Validator } from "./components/validate.js";
 import {
   Card,
-  profileName,
-  profileStatus,
-  profileAvatar,
-  renderCard,
 } from "./components/card.js";
 import {Section} from "./components/section.js"
 
-const popupAvatar = new PopupWithForm('#popup-avatar');
+const popupAvatar = new PopupWithForm('#popup-avatar',
+(evt) => {
+  evt.preventDefault();
+  renderLoading("add-button-img-avatar", true, "Сохранить");
+  api
+    .patchAvatar(avatarInputValue.value)
+    .then((info) => {
+      profileAvatar.setAttribute("src", info.avatar);
+      popupAvatar.close();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      renderLoading("add-button-img-avatar", false, "Сохранить");
+    });
+}
+);
 const popupPlace = new PopupWithForm(
   '#popup-container-place',
  (evt) => {
@@ -48,14 +68,12 @@ const popupPlace = new PopupWithForm(
   api
     .additionCardsByForm(ImgName.value, linkImg.value)
     .then((card) => {
-      renderCard(
-        card.link,
-        card.name,
-        card.likes.length,
-        card.likes,
-        card._id,
-        true
-      );
+      const newCard = new Card(card,
+        true,
+        user,
+        (url, name) => { popupImage.open(url, name) },
+        "#card-template")
+        sec.setItem(newCard.generate());
     })
     .catch((err) => {
       console.error(err);
@@ -66,7 +84,24 @@ const popupPlace = new PopupWithForm(
   })
 
 
-const popupProfile = new PopupWithForm('#popup');
+const popupProfile = new PopupWithForm('#popup',
+(evt) => {
+evt.preventDefault();
+renderLoading("add-button-inf", true, "Сохранить");
+api
+  .patchUserInfo(popupInfoName.value, popupInfoAbout.value)
+  .then((info) => {
+    profileName.textContent = info.name;
+    profileStatus.textContent = info.about;
+    /* profileAvatar.setAttribute("src", info.avatar); */
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    renderLoading("add-button-inf", false, "Сохранить");
+  });
+});
 const popupImage = new PopupWithImage(".popup_img")
 
 function formValidation(formSelector) {
@@ -77,15 +112,15 @@ function formValidation(formSelector) {
   });
 }
 formValidation(settings.formSelector);
-let sec = null;
 
-//функция загрезки карточек
+
+//функция загрузки карточек
 function renderCards() {
   Promise.all([api.getUserInfo(), api.getCardsInfo()])
     .then(([info, cards]) => {
-
+      user = info;
       sec = new Section (
-        cards,
+        cards.reverse(),
         (item) => {
           return new Card(
             item,
@@ -153,39 +188,3 @@ avatarEditButton.addEventListener("click", () =>  popupAvatar.open());
 profileAvatar.addEventListener("click", () =>  popupAvatar.open());
 buttonOpenCardPopup.addEventListener("click", () => popupPlace.open());
 
-//отправка формы:
-avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
-  evt.preventDefault();
-  renderLoading("add-button-img-avatar", true, "Сохранить");
-  api
-    .patchAvatar(avatarInputValue.value)
-    .then((info) => {
-      profileAvatar.setAttribute("src", info.avatar);
-      popupAvatar.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      renderLoading("add-button-img-avatar", false, "Сохранить");
-    });
-});
-
-profileForm.addEventListener("submit", function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  renderLoading("add-button-inf", true, "Сохранить");
-  api
-    .patchUserInfo(popupInfoName.value, popupInfoAbout.value)
-    .then((info) => {
-      profileName.textContent = info.name;
-      profileStatus.textContent = info.about;
-      profileAvatar.setAttribute("src", info.avatar);
-      popupProfile.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      renderLoading("add-button-inf", false, "Сохранить");
-    });
-});
