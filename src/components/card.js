@@ -1,4 +1,4 @@
-import { openPopup } from "./modal.js";
+import {  } from "./modal.js";
 import { api } from "./api.js";
 
 const popupOpenImg = document.querySelector(".popup_img");

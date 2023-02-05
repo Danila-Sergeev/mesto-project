@@ -17,9 +17,9 @@ const popupInfoAbout = document.querySelector("#input-about");
 const avatarInputValue = document.querySelector("#input-src-avatar");
 const linkImg = document.querySelector("#input-src");
 const ImgName = document.querySelector("#input-text-img");
-const popupPlace = document.querySelector("#popup-container-place");
+/* const popupPlace = document.querySelector("#popup-container-place");
 const popupAvatar = document.querySelector("#popup-avatar");
-const popupProfile = document.querySelector("#popup");
+const popupProfile = document.querySelector("#popup"); */
 const cardsForm = document.forms.editCards;
 const avatarForm = document.forms.editAvatar;
 
@@ -27,7 +27,7 @@ const avatarForm = document.forms.editAvatar;
 //const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
-import { openPopup, closePopup, renderLoading } from "./components/modal.js";
+import { renderLoading, Popup } from "./components/modal.js";
 import { settings } from "./components/constants.js";
 import { Validator } from "./components/validate.js";
 import {
@@ -38,6 +38,10 @@ import {
   renderCard,
 } from "./components/card.js";
 import {Section} from "./components/section.js"
+
+const popupAvatar = new Popup('#popup-avatar');
+const popupPlace = new Popup('#popup-container-place');
+const popupProfile = new Popup('#popup');
 
 function formValidation(formSelector) {
   const formElements = Array.from(document.querySelectorAll(formSelector));
@@ -92,7 +96,7 @@ cardsForm.addEventListener("submit", (evt) => {
         true
       );
       cardsForm.reset();
-      closePopup(popupPlace);
+      popupPlace.close();
     })
     .catch((err) => {
       console.error(err);
@@ -103,7 +107,7 @@ cardsForm.addEventListener("submit", (evt) => {
 });
 
 ////открыть закрыть попап:
-popups.forEach((popup) => {
+/* popups.forEach((popup) => {
   popup.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup_opened")) {
       closePopup(popup);
@@ -112,17 +116,17 @@ popups.forEach((popup) => {
       closePopup(popup);
     }
   });
-});
+}); */
 
 buttonOpenEditPopup.addEventListener("click", () => {
-  openPopup(popupProfile);
+  popupProfile.open();
   popupInfoName.value = profileName.textContent;
   popupInfoAbout.value = profileStatus.textContent;
 });
 
-avatarEditButton.addEventListener("click", () => openPopup(popupAvatar));
-profileAvatar.addEventListener("click", () => openPopup(popupAvatar));
-buttonOpenCardPopup.addEventListener("click", () => openPopup(popupPlace));
+avatarEditButton.addEventListener("click", () =>  popupAvatar.open());
+profileAvatar.addEventListener("click", () =>  popupAvatar.open());
+buttonOpenCardPopup.addEventListener("click", () => popupPlace.open());
 
 //отправка формы:
 avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
@@ -133,7 +137,7 @@ avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
     .then((info) => {
       profileAvatar.setAttribute("src", info.avatar);
       avatarForm.reset();
-      closePopup(popupAvatar);
+      popupAvatar.close();
     })
     .catch((err) => {
       console.error(err);
@@ -151,7 +155,7 @@ profileForm.addEventListener("submit", function handleProfileFormSubmit(evt) {
       profileName.textContent = info.name;
       profileStatus.textContent = info.about;
       profileAvatar.setAttribute("src", info.avatar);
-      closePopup(popupProfile);
+      popupProfile.close();
     })
     .catch((err) => {
       console.error(err);
