@@ -13,6 +13,7 @@ class Popup {
     document.removeEventListener("keydown", (evt) => this._handleEscClose(evt));
     this._popup.classList.remove("popup_opened");
   }
+
   _handleEscClose(evt){
     if (evt.key === "Escape") {
       this.close();
@@ -27,6 +28,49 @@ class Popup {
         this.close();
       }
     })
+  }
+}
+
+class PopupWithImage extends Popup {
+  open (imageUrl, imageDescription) {
+    super.open()
+    const popupOpenImgName = this._popup.querySelector(".popup_img_name");
+    const popupOpenImgPhoto = this._popup.querySelector(".popup_img_photo");
+    popupOpenImgName.textContent = imageDescription;
+    popupOpenImgPhoto.setAttribute("src", imageUrl);
+    popupOpenImgPhoto.setAttribute("alt", imageDescription);
+  }
+}
+
+class PopupWithForm extends Popup {
+  constructor(popupSelector, submitCallback) {
+    super(popupSelector);
+    this._submitCallback = submitCallback;
+  }
+
+  open(){
+    super.open();
+    this._getInputValues();
+  }
+
+  _getInputValues(){
+    const profileName = document.querySelector(".profile__name");
+    const profileStatus = document.querySelector(".profile__status");
+    this._popup.querySelector("#input-name").value = profileName.textContent;
+    this._popup.querySelector("#input-about").value = profileStatus.textContent;
+  }
+
+  setEventListeners() {
+    super.setEventListeners();
+    this._popup.addEventListener('submit', (evt) => {
+      this._submitCallback(evt);
+      super.close()
+    })
+  }
+
+  close(){
+    super.close()
+    this._popup.querySelector(".popup__edit").reset();
   }
 }
 
@@ -57,4 +101,4 @@ function renderLoading(btnId, isLoading, usualText) {
   }
 }
 
-export {renderLoading, Popup}
+export { renderLoading, Popup, PopupWithImage, PopupWithForm }

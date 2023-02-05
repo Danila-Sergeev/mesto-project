@@ -11,7 +11,7 @@ const profileForm = document.forms.editProfile;
 const buttonOpenCardPopup = document.querySelector(".profile__add-button");
 const buttonOpenEditPopup = document.querySelector(".profile__edit");
 const avatarEditButton = document.querySelector(".profile__avatar_edit");
-const popups = document.querySelectorAll(".popup");
+// const popups = document.querySelectorAll(".popup");
 const popupInfoName = document.querySelector("#input-name");
 const popupInfoAbout = document.querySelector("#input-about");
 const avatarInputValue = document.querySelector("#input-src-avatar");
@@ -27,7 +27,7 @@ const avatarForm = document.forms.editAvatar;
 //const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
-import { renderLoading, Popup } from "./components/modal.js";
+import { renderLoading, Popup, PopupWithImage, PopupWithForm } from "./components/modal.js";
 import { settings } from "./components/constants.js";
 import { Validator } from "./components/validate.js";
 import {
@@ -39,50 +39,11 @@ import {
 } from "./components/card.js";
 import {Section} from "./components/section.js"
 
-const popupAvatar = new Popup('#popup-avatar');
-const popupPlace = new Popup('#popup-container-place');
-const popupProfile = new Popup('#popup');
-
-function formValidation(formSelector) {
-  const formElements = Array.from(document.querySelectorAll(formSelector));
-  formElements.forEach((formElement) => {
-    const validator = new Validator(settings, formElement);
-    validator.enableValidation();
-  });
-}
-formValidation(settings.formSelector);
-
-//функция загрезки карточек
-function renderCards() {
-  Promise.all([api.getUserInfo(), api.getCardsInfo()])
-    .then(([info, cards]) => {
-
-      const sec = new Section (
-        cards,
-        (item) => {
-          return new Card(
-            item,
-            item.owner._id === info._id,
-            info,
-            () => {},
-            "#card-template"
-          );  
-        },
-        ".cards-grid")
-      sec.renderItems()
-      profileName.textContent = info.name;
-      profileStatus.textContent = info.about;
-      profileAvatar.setAttribute("src", info.avatar);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-renderCards();
-
-//Добавление карточки через форму:
-cardsForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
+const popupAvatar = new PopupWithForm('#popup-avatar');
+const popupPlace = new PopupWithForm(
+  '#popup-container-place',
+ (evt) => {
+   evt.preventDefault();
   renderLoading("add-button-img", true, "Создать");
   api
     .additionCardsByForm(ImgName.value, linkImg.value)
@@ -95,8 +56,6 @@ cardsForm.addEventListener("submit", (evt) => {
         card._id,
         true
       );
-      cardsForm.reset();
-      popupPlace.close();
     })
     .catch((err) => {
       console.error(err);
@@ -104,7 +63,75 @@ cardsForm.addEventListener("submit", (evt) => {
     .finally(() => {
       renderLoading("add-button-img", false, "Создать");
     });
-});
+  })
+
+
+const popupProfile = new PopupWithForm('#popup');
+const popupImage = new PopupWithImage(".popup_img")
+
+function formValidation(formSelector) {
+  const formElements = Array.from(document.querySelectorAll(formSelector));
+  formElements.forEach((formElement) => {
+    const validator = new Validator(settings, formElement);
+    validator.enableValidation();
+  });
+}
+formValidation(settings.formSelector);
+let sec = null;
+
+//функция загрезки карточек
+function renderCards() {
+  Promise.all([api.getUserInfo(), api.getCardsInfo()])
+    .then(([info, cards]) => {
+
+      sec = new Section (
+        cards,
+        (item) => {
+          return new Card(
+            item,
+            item.owner._id === info._id,
+            info,
+            (url, name) => { popupImage.open(url, name) },
+            "#card-template"
+          );  
+        },
+        ".cards-grid")
+
+      sec.renderItems()
+      profileName.textContent = info.name;
+      profileStatus.textContent = info.about;
+      profileAvatar.setAttribute("src", info.avatar);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+renderCards();
+
+// //Добавление карточки через форму:
+// cardsForm.addEventListener("submit", (evt) => {
+//   evt.preventDefault();
+//   renderLoading("add-button-img", true, "Создать");
+//   api
+//     .additionCardsByForm(ImgName.value, linkImg.value)
+//     .then((card) => {
+//       renderCard(
+//         card.link,
+//         card.name,
+//         card.likes.length,
+//         card.likes,
+//         card._id,
+//         true
+//       );
+//       popupPlace.close();
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     })
+//     .finally(() => {
+//       renderLoading("add-button-img", false, "Создать");
+//     });
+// });
 
 ////открыть закрыть попап:
 /* popups.forEach((popup) => {
@@ -120,8 +147,6 @@ cardsForm.addEventListener("submit", (evt) => {
 
 buttonOpenEditPopup.addEventListener("click", () => {
   popupProfile.open();
-  popupInfoName.value = profileName.textContent;
-  popupInfoAbout.value = profileStatus.textContent;
 });
 
 avatarEditButton.addEventListener("click", () =>  popupAvatar.open());
@@ -136,7 +161,6 @@ avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
     .patchAvatar(avatarInputValue.value)
     .then((info) => {
       profileAvatar.setAttribute("src", info.avatar);
-      avatarForm.reset();
       popupAvatar.close();
     })
     .catch((err) => {
@@ -146,6 +170,7 @@ avatarForm.addEventListener("submit", function handleAvatarformSubmit(evt) {
       renderLoading("add-button-img-avatar", false, "Сохранить");
     });
 });
+
 profileForm.addEventListener("submit", function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   renderLoading("add-button-inf", true, "Сохранить");

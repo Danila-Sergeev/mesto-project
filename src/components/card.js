@@ -1,10 +1,10 @@
 import {  } from "./modal.js";
 import { api } from "./api.js";
 
-const popupOpenImg = document.querySelector(".popup_img");
+//const popupOpenImg = document.querySelector(".popup_img");
 const cardContainer = document.querySelector(".cards-grid");
-const popupOpenImgName = document.querySelector(".popup_img_name");
-const popupOpenImgPhoto = document.querySelector(".popup_img_photo");
+// const popupOpenImgName = document.querySelector(".popup_img_name");
+// const popupOpenImgPhoto = document.querySelector(".popup_img_photo");
 const popupConfirm = document.querySelector("#popup-confirm");
 const profileName = document.querySelector(".profile__name");
 const profileStatus = document.querySelector(".profile__status");
@@ -19,15 +19,15 @@ class Card {
     handleCardClick,
     selector
   ) {
-    (this._photoLink = link),
-      (this._placeName = name),
-      (this._placeLikesLength = likes.length),
-      (this._placeLike = likes),
-      (this._cardId = _id),
-      (this._ownCard = ownCard),
-      (this._info = info),
-      (this._handleCardClick = handleCardClick),
-      (this._selector = selector);
+      this._photoLink = link
+      this._placeName = name
+      this._placeLikesLength = likes.length
+      this._placeLike = likes
+      this._cardId = _id
+      this._ownCard = ownCard
+      this._info = info
+      this._handleCardClick = handleCardClick
+      this._selector = selector
   }
 
   _getTemplate() {
@@ -70,6 +70,14 @@ class Card {
       .addEventListener("click", (evt) => {
         this._handleLikeClick(evt);
       });
+
+    //открытие попапа с картинкой:
+    this._element.querySelector('.card__img')
+    .addEventListener("click", (evt) => {
+      evt.preventDefault();
+      console.log(this)
+      this._handleCardClick(this._photoLink, this._placeName);
+    });
   }
 
   generate() {
@@ -124,6 +132,8 @@ class Card {
     }
   }
 }
+
+
 
 // функция создания (удаления) новой карточки и открытие изображения на весь экран:
 function addCard(
@@ -201,17 +211,18 @@ function addCard(
   }
   deletingCard();
 
-  //открытие попапа с картинкой:
-  cardElementImg.addEventListener("click", (evt) => {
-    evt.preventDefault();
-    openPopup(popupOpenImg);
-    popupOpenImgName.textContent = placeName;
-    popupOpenImgPhoto.setAttribute("src", photoLink);
-    popupOpenImgPhoto.setAttribute("alt", placeName);
-  });
+  // //открытие попапа с картинкой:
+  // cardElementImg.addEventListener("click", (evt) => {
+  //   evt.preventDefault();
+  //   openPopup(popupOpenImg);
+  //   popupOpenImgName.textContent = placeName;
+  //   popupOpenImgPhoto.setAttribute("src", photoLink);
+  //   popupOpenImgPhoto.setAttribute("alt", placeName);
+  // });
 
   return cardElement;
 }
+
 function renderCard(
   photoLink,
   placeName,
