@@ -26,19 +26,30 @@ const profileAvatar = document.querySelector(".profile__avatar");
 //const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
-import { renderLoading, PopupWithImage, PopupWithForm } from "./components/modal.js";
+import {
+  renderLoading,
+  PopupWithImage,
+  PopupWithForm,
+} from "./components/modal.js";
 import { settings } from "./components/constants.js";
 import { Validator } from "./components/validate.js";
 import { Card } from "./components/card.js";
-import {Section} from "./components/section.js"
+import { Section } from "./components/section.js";
 import { UserInfo } from "./components/UserInfo";
 
 let sec = null;
-const userInfo = new UserInfo(".profile__name", ".profile__status", api, (state) => { renderLoading("add-button-inf", state, "Сохранить"); });
-const info = userInfo.getUserInfo();
+const userInfo = new UserInfo(
+  ".profile__name",
+  ".profile__status",
+  api,
+  (state) => {
+    renderLoading("add-button-inf", state, "Сохранить");
+  }
+);
+let info = userInfo.getUserInfo();
+console.log(info);
 
-const popupAvatar = new PopupWithForm('#popup-avatar',
-(evt) => {
+const popupAvatar = new PopupWithForm("#popup-avatar", (evt) => {
   evt.preventDefault();
   renderLoading("add-button-img-avatar", true, "Сохранить");
   api
@@ -53,23 +64,24 @@ const popupAvatar = new PopupWithForm('#popup-avatar',
     .finally(() => {
       renderLoading("add-button-img-avatar", false, "Сохранить");
     });
-}
-);
+});
 
-const popupPlace = new PopupWithForm(
-  '#popup-container-place',
- (evt) => {
-   evt.preventDefault();
+const popupPlace = new PopupWithForm("#popup-container-place", (evt) => {
+  evt.preventDefault();
   renderLoading("add-button-img", true, "Создать");
   api
     .additionCardsByForm(ImgName.value, linkImg.value)
     .then((card) => {
-      const newCard = new Card(card,
+      const newCard = new Card(
+        card,
         true,
-        user,
-        (url, name) => { popupImage.open(url, name) },
-        "#card-template")
-        sec.setItem(newCard.generate());
+        info,
+        (url, name) => {
+          popupImage.open(url, name);
+        },
+        "#card-template"
+      );
+      sec.setItem(newCard.generate());
     })
     .catch((err) => {
       console.error(err);
@@ -77,16 +89,15 @@ const popupPlace = new PopupWithForm(
     .finally(() => {
       renderLoading("add-button-img", false, "Создать");
     });
-  })
-
-const popupProfile = new PopupWithForm('#popup',
-(evt) => {
-  evt.preventDefault();
-  renderLoading("add-button-inf", true, "Сохранить");
-  userInfo.setUserInfo(popupInfoName.value, popupInfoAbout.value)
 });
 
-const popupImage = new PopupWithImage(".popup_img")
+const popupProfile = new PopupWithForm("#popup", (evt) => {
+  evt.preventDefault();
+  renderLoading("add-button-inf", true, "Сохранить");
+  userInfo.setUserInfo(popupInfoName, popupInfoAbout);
+});
+
+const popupImage = new PopupWithImage(".popup_img");
 
 function formValidation(formSelector) {
   const formElements = Array.from(document.querySelectorAll(formSelector));
@@ -99,22 +110,25 @@ formValidation(settings.formSelector);
 
 //функция загрузки карточек
 function renderCards() {
-  Promise.all([info, api.getCardsInfo()])
+  Promise.all([api.getUserInfo(), api.getCardsInfo()])
     .then(([info, cards]) => {
-      sec = new Section (
+      sec = new Section(
         cards.reverse(),
         (item) => {
           return new Card(
             item,
             item.owner._id === info._id,
             info,
-            (url, name) => { popupImage.open(url, name) },
+            (url, name) => {
+              popupImage.open(url, name);
+            },
             "#card-template"
-          );  
+          );
         },
-        ".cards-grid")
+        ".cards-grid"
+      );
 
-      sec.renderItems()
+      sec.renderItems();
       profileAvatar.setAttribute("src", info.avatar);
     })
     .catch((err) => {
@@ -123,8 +137,9 @@ function renderCards() {
 }
 renderCards();
 
-buttonOpenEditPopup.addEventListener("click", () => { popupProfile.open(); });
-avatarEditButton.addEventListener("click", () =>  popupAvatar.open());
-profileAvatar.addEventListener("click", () =>  popupAvatar.open());
+buttonOpenEditPopup.addEventListener("click", () => {
+  popupProfile.open();
+});
+avatarEditButton.addEventListener("click", () => popupAvatar.open());
+profileAvatar.addEventListener("click", () => popupAvatar.open());
 buttonOpenCardPopup.addEventListener("click", () => popupPlace.open());
-
