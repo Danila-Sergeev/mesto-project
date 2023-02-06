@@ -20,27 +20,22 @@ const ImgName = document.querySelector("#input-text-img");
 /* const popupPlace = document.querySelector("#popup-container-place");
 const popupAvatar = document.querySelector("#popup-avatar");
 const popupProfile = document.querySelector("#popup"); */
-const cardsForm = document.forms.editCards;
-const avatarForm = document.forms.editAvatar;
-const profileName = document.querySelector(".profile__name");
-const profileStatus = document.querySelector(".profile__status");
 const profileAvatar = document.querySelector(".profile__avatar");
-
-
-let sec = null;
-let user = null;
 
 // TODO - refactor
 //const cardContainer = document.querySelector(".cards-grid");
 
 import { api } from "./components/api.js";
-import { renderLoading, Popup, PopupWithImage, PopupWithForm } from "./components/modal.js";
+import { renderLoading, PopupWithImage, PopupWithForm } from "./components/modal.js";
 import { settings } from "./components/constants.js";
 import { Validator } from "./components/validate.js";
-import {
-  Card,
-} from "./components/card.js";
+import { Card } from "./components/card.js";
 import {Section} from "./components/section.js"
+import { UserInfo } from "./components/UserInfo";
+
+let sec = null;
+const userInfo = new UserInfo(".profile__name", ".profile__status", api, (state) => { renderLoading("add-button-inf", state, "Сохранить"); });
+const info = userInfo.getUserInfo();
 
 const popupAvatar = new PopupWithForm('#popup-avatar',
 (evt) => {
@@ -60,6 +55,7 @@ const popupAvatar = new PopupWithForm('#popup-avatar',
     });
 }
 );
+
 const popupPlace = new PopupWithForm(
   '#popup-container-place',
  (evt) => {
@@ -83,25 +79,13 @@ const popupPlace = new PopupWithForm(
     });
   })
 
-
 const popupProfile = new PopupWithForm('#popup',
 (evt) => {
-evt.preventDefault();
-renderLoading("add-button-inf", true, "Сохранить");
-api
-  .patchUserInfo(popupInfoName.value, popupInfoAbout.value)
-  .then((info) => {
-    profileName.textContent = info.name;
-    profileStatus.textContent = info.about;
-    /* profileAvatar.setAttribute("src", info.avatar); */
-  })
-  .catch((err) => {
-    console.error(err);
-  })
-  .finally(() => {
-    renderLoading("add-button-inf", false, "Сохранить");
-  });
+  evt.preventDefault();
+  renderLoading("add-button-inf", true, "Сохранить");
+  userInfo.setUserInfo(popupInfoName.value, popupInfoAbout.value)
 });
+
 const popupImage = new PopupWithImage(".popup_img")
 
 function formValidation(formSelector) {
@@ -113,12 +97,10 @@ function formValidation(formSelector) {
 }
 formValidation(settings.formSelector);
 
-
 //функция загрузки карточек
 function renderCards() {
-  Promise.all([api.getUserInfo(), api.getCardsInfo()])
+  Promise.all([info, api.getCardsInfo()])
     .then(([info, cards]) => {
-      user = info;
       sec = new Section (
         cards.reverse(),
         (item) => {
@@ -133,8 +115,6 @@ function renderCards() {
         ".cards-grid")
 
       sec.renderItems()
-      profileName.textContent = info.name;
-      profileStatus.textContent = info.about;
       profileAvatar.setAttribute("src", info.avatar);
     })
     .catch((err) => {
@@ -143,47 +123,7 @@ function renderCards() {
 }
 renderCards();
 
-// //Добавление карточки через форму:
-// cardsForm.addEventListener("submit", (evt) => {
-//   evt.preventDefault();
-//   renderLoading("add-button-img", true, "Создать");
-//   api
-//     .additionCardsByForm(ImgName.value, linkImg.value)
-//     .then((card) => {
-//       renderCard(
-//         card.link,
-//         card.name,
-//         card.likes.length,
-//         card.likes,
-//         card._id,
-//         true
-//       );
-//       popupPlace.close();
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     })
-//     .finally(() => {
-//       renderLoading("add-button-img", false, "Создать");
-//     });
-// });
-
-////открыть закрыть попап:
-/* popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains("popup__close-icon")) {
-      closePopup(popup);
-    }
-  });
-}); */
-
-buttonOpenEditPopup.addEventListener("click", () => {
-  popupProfile.open();
-});
-
+buttonOpenEditPopup.addEventListener("click", () => { popupProfile.open(); });
 avatarEditButton.addEventListener("click", () =>  popupAvatar.open());
 profileAvatar.addEventListener("click", () =>  popupAvatar.open());
 buttonOpenCardPopup.addEventListener("click", () => popupPlace.open());
