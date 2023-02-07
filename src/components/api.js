@@ -51,7 +51,7 @@ export class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: apiConfig.headers,
+      headers: this._headers,
     }).then((res) => {
       this.validation(res);
     });
