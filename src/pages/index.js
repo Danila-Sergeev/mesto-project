@@ -1,18 +1,18 @@
-import "./pages/index.css";
-import "./components/card.js";
-import "./components/modal.js";
-import "./components/utilits.js";
-import "./components/validate.js";
-import "./components/api.js";
-import "./components/section.js";
-import "./components/constants.js";
+import "./index.css";
+import "../components/Card.js";
+import "../components/Modal.js";
+import "../components/utils/utilits.js";
+import "../components/Validate.js";
+import "../components/Api.js";
+import "../components/Section.js";
+import "../components/utils/constants.js";
 
-import { Api } from "./components/api.js";
+import { Api } from "../components/Api.js";
 import {
   renderLoading,
   PopupWithImage,
   PopupWithForm,
-} from "./components/modal.js";
+} from "../components/Modal.js";
 import {
   settings,
   apiConfig,
@@ -25,11 +25,11 @@ import {
   linkImg,
   ImgName,
   profileAvatar,
-} from "./components/constants.js";
-import { Validator } from "./components/validate.js";
-import { Card } from "./components/card.js";
-import { Section } from "./components/section.js";
-import { UserInfo } from "./components/UserInfo";
+} from "../components/utils/constants.js";
+import { Validator } from "../components/Validate.js";
+import { Card } from "../components/Card.js";
+import { Section } from "../components/Section.js";
+import { UserInfo } from "../components/UserInfo";
 
 const api = new Api(apiConfig);
 let sec = null;
@@ -139,6 +139,6 @@ buttonOpenEditPopup.addEventListener("click", () => {
     [userInfo.getProfileName(), userInfo.getProfileStatus()]
   );
 });
-avatarEditButton.addEventListener("click", () => popupAvatar.open([],[]));
-profileAvatar.addEventListener("click", () => popupAvatar.open([],[]));
-buttonOpenCardPopup.addEventListener("click", () => popupPlace.open([],[]));
+avatarEditButton.addEventListener("click", () => popupAvatar.open([], []));
+profileAvatar.addEventListener("click", () => popupAvatar.open([], []));
+buttonOpenCardPopup.addEventListener("click", () => popupPlace.open([], []));
