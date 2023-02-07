@@ -48,11 +48,11 @@ class PopupWithForm extends Popup {
     this._submitCallback = submitCallback;
   }
 
-  open( inputNames, inputValues ) {
+  open(inputNames, inputValues) {
     super.open();
     for (let i = 0; i < inputNames.length; i++) {
-      let input = this._popup.querySelector(inputNames[i])
-      input.value = inputValues[i]
+      let input = this._popup.querySelector(inputNames[i]);
+      input.value = inputValues[i];
     }
   }
 

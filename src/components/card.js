@@ -1,22 +1,22 @@
-import { api } from "./api.js";
-
-class Card {
+export class Card {
   constructor(
     { link, name, likes, _id },
     ownCard,
     info,
     handleCardClick,
-    selector
+    selector,
+    api
   ) {
-      this._photoLink = link
-      this._placeName = name
-      this._placeLikesLength = likes.length
-      this._placeLike = likes
-      this._cardId = _id
-      this._ownCard = ownCard
-      this._info = info
-      this._handleCardClick = handleCardClick
-      this._selector = selector
+    this._photoLink = link;
+    this._placeName = name;
+    this._placeLikesLength = likes.length;
+    this._placeLike = likes;
+    this._cardId = _id;
+    this._ownCard = ownCard;
+    this._info = info;
+    this._handleCardClick = handleCardClick;
+    this._selector = selector;
+    this._api = api;
   }
 
   _getTemplate() {
@@ -31,7 +31,7 @@ class Card {
   _handleLikeClick(evt) {
     const likeCounter = this._element.querySelector(".card__like-counter");
     if (!evt.target.classList.contains("card__like_status_on")) {
-      api
+      this._api
         .addCardLike(this._cardId)
         .then(() => {
           likeCounter.textContent = Number(likeCounter.textContent) + 1;
@@ -41,7 +41,7 @@ class Card {
           console.error(err);
         });
     } else if (evt.target.classList.contains("card__like_status_on")) {
-      api
+      this._api
         .deleteCardLike(this._cardId, this._info)
         .then(() => {
           likeCounter.textContent = Number(likeCounter.textContent) - 1;
@@ -61,12 +61,13 @@ class Card {
       });
 
     //открытие попапа с картинкой:
-    this._element.querySelector('.card__img')
-    .addEventListener("click", (evt) => {
-      evt.preventDefault();
-      console.log(this)
-      this._handleCardClick(this._photoLink, this._placeName);
-    });
+    this._element
+      .querySelector(".card__img")
+      .addEventListener("click", (evt) => {
+        evt.preventDefault();
+        console.log(this);
+        this._handleCardClick(this._photoLink, this._placeName);
+      });
   }
 
   generate() {
@@ -92,7 +93,7 @@ class Card {
       this._element
         .querySelector(".card__trash")
         .addEventListener("click", () => {
-          api
+          this._api
             .deleteCard(this._cardId)
             .then(() => {
               this._element.remove();
@@ -121,7 +122,3 @@ class Card {
     }
   }
 }
-
-export {
-  Card,
-};

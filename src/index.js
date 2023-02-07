@@ -7,36 +7,31 @@ import "./components/api.js";
 import "./components/section.js";
 import "./components/constants.js";
 
-const profileForm = document.forms.editProfile;
-const buttonOpenCardPopup = document.querySelector(".profile__add-button");
-const buttonOpenEditPopup = document.querySelector(".profile__edit");
-const avatarEditButton = document.querySelector(".profile__avatar_edit");
-// const popups = document.querySelectorAll(".popup");
-const popupInfoName = document.querySelector("#input-name");
-const popupInfoAbout = document.querySelector("#input-about");
-const avatarInputValue = document.querySelector("#input-src-avatar");
-const linkImg = document.querySelector("#input-src");
-const ImgName = document.querySelector("#input-text-img");
-/* const popupPlace = document.querySelector("#popup-container-place");
-const popupAvatar = document.querySelector("#popup-avatar");
-const popupProfile = document.querySelector("#popup"); */
-const profileAvatar = document.querySelector(".profile__avatar");
-
-// TODO - refactor
-//const cardContainer = document.querySelector(".cards-grid");
-
-import { api } from "./components/api.js";
+import { Api } from "./components/api.js";
 import {
   renderLoading,
   PopupWithImage,
   PopupWithForm,
 } from "./components/modal.js";
-import { settings } from "./components/constants.js";
+import {
+  settings,
+  apiConfig,
+  buttonOpenCardPopup,
+  buttonOpenEditPopup,
+  avatarEditButton,
+  popupInfoName,
+  popupInfoAbout,
+  avatarInputValue,
+  linkImg,
+  ImgName,
+  profileAvatar,
+} from "./components/constants.js";
 import { Validator } from "./components/validate.js";
 import { Card } from "./components/card.js";
 import { Section } from "./components/section.js";
 import { UserInfo } from "./components/UserInfo";
 
+const api = new Api(apiConfig);
 let sec = null;
 const userInfo = new UserInfo(
   ".profile__name",
@@ -78,7 +73,8 @@ const popupPlace = new PopupWithForm("#popup-container-place", (evt) => {
         (url, name) => {
           popupImage.open(url, name);
         },
-        "#card-template"
+        "#card-template",
+        api
       );
       sec.setItem(newCard.generate());
     })
@@ -121,7 +117,8 @@ function renderCards() {
             (url, name) => {
               popupImage.open(url, name);
             },
-            "#card-template"
+            "#card-template",
+            api
           );
         },
         ".cards-grid"
@@ -137,7 +134,10 @@ function renderCards() {
 renderCards();
 
 buttonOpenEditPopup.addEventListener("click", () => {
-  popupProfile.open(["#input-name","#input-about"], [userInfo.getProfileName(), userInfo.getProfileStatus()]);
+  popupProfile.open(
+    ["#input-name", "#input-about"],
+    [userInfo.getProfileName(), userInfo.getProfileStatus()]
+  );
 });
 avatarEditButton.addEventListener("click", () => popupAvatar.open());
 profileAvatar.addEventListener("click", () => popupAvatar.open());

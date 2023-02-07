@@ -6,11 +6,11 @@ class UserInfo {
     this._renderLoadingCallback = renderLoadingCallback;
   }
 
-  getProfileName(){
+  getProfileName() {
     return this._profileName.textContent;
   }
 
-  getProfileStatus(){
+  getProfileStatus() {
     return this._profileStatus.textContent;
   }
 

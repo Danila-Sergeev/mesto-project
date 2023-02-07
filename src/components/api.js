@@ -1,12 +1,4 @@
-const apiConfig = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-17",
-  headers: {
-    authorization: "c8ce4a71-bdd1-470d-8928-726e47ccdf35",
-    "Content-Type": "application/json",
-  },
-};
-
-class Api {
+export class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -94,5 +86,3 @@ class Api {
     }).then((res) => this.validation(res));
   }
 }
-
-export const api = new Api(apiConfig);
