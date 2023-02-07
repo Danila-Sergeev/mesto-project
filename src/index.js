@@ -139,6 +139,6 @@ buttonOpenEditPopup.addEventListener("click", () => {
     [userInfo.getProfileName(), userInfo.getProfileStatus()]
   );
 });
-avatarEditButton.addEventListener("click", () => popupAvatar.open());
-profileAvatar.addEventListener("click", () => popupAvatar.open());
-buttonOpenCardPopup.addEventListener("click", () => popupPlace.open());
+avatarEditButton.addEventListener("click", () => popupAvatar.open([],[]));
+profileAvatar.addEventListener("click", () => popupAvatar.open([],[]));
+buttonOpenCardPopup.addEventListener("click", () => popupPlace.open([],[]));

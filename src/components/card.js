@@ -65,7 +65,6 @@ export class Card {
       .querySelector(".card__img")
       .addEventListener("click", (evt) => {
         evt.preventDefault();
-        console.log(this);
         this._handleCardClick(this._photoLink, this._placeName);
       });
   }
