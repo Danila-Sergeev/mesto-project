@@ -47,7 +47,6 @@ const userInfo = new UserInfo(
   }
 );
 let info = userInfo.getUserInfo();
-console.log(info);
 
 const popupAvatar = new PopupWithForm("#popup-avatar", (evt) => {
   evt.preventDefault();
@@ -138,7 +137,7 @@ function renderCards() {
 renderCards();
 
 buttonOpenEditPopup.addEventListener("click", () => {
-  popupProfile.open();
+  popupProfile.open(["#input-name","#input-about"], [userInfo.getProfileName(), userInfo.getProfileStatus()]);
 });
 avatarEditButton.addEventListener("click", () => popupAvatar.open());
 profileAvatar.addEventListener("click", () => popupAvatar.open());

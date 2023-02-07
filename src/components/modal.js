@@ -48,9 +48,12 @@ class PopupWithForm extends Popup {
     this._submitCallback = submitCallback;
   }
 
-  open() {
+  open( inputNames, inputValues ) {
     super.open();
-    this._getInputValues();
+    for (let i = 0; i < inputNames.length; i++) {
+      let input = this._popup.querySelector(inputNames[i])
+      input.value = inputValues[i]
+    }
   }
 
   _getInputValues() {
@@ -74,23 +77,6 @@ class PopupWithForm extends Popup {
   }
 }
 
-/* function this__handleEscClose()(evt) {
-  if (evt.key === "Escape") {
-    const popupOpened = document.querySelector(".popup_opened");
-    closePopup(popupOpened);
-  }
-}
- */
-//функции открытия/закрытия попап
-/* function openPopup(popup) {
-  document.addEventListener("keydown", this__handleEscClose());
-  popup.classList.add("popup_opened");
-}
-function closePopup(popup) {
-  document.removeEventListener("keydown", this__handleEscClose());
-  popup.classList.remove("popup_opened");
-}
- */
 //функции отображения прогрузки:
 function renderLoading(btnId, isLoading, usualText) {
   if (isLoading) {

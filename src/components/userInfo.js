@@ -6,18 +6,26 @@ class UserInfo {
     this._renderLoadingCallback = renderLoadingCallback;
   }
 
+  getProfileName(){
+    return this._profileName.textContent;
+  }
+
+  getProfileStatus(){
+    return this._profileStatus.textContent;
+  }
+
   getUserInfo() {
     return this._api
       .getUserInfo()
       .then((info) => {
         this._profileName.textContent = info.name;
         this._profileStatus.textContent = info.about;
-        console.log(info);
       })
       .catch((err) => {
         console.error(err);
       });
   }
+
   setUserInfo(name, status) {
     this._renderLoadingCallback(true);
     this._api
