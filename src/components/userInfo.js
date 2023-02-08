@@ -1,8 +1,15 @@
 class UserInfo {
-  constructor(userNameSelector, userInfoSelector, api, renderLoadingCallback) {
+  constructor(
+    userNameSelector,
+    userInfoSelector,
+    userAvatarSelector,
+    api,
+    renderLoadingCallback
+  ) {
     this._api = api;
     this._profileName = document.querySelector(userNameSelector);
     this._profileStatus = document.querySelector(userInfoSelector);
+    this._profileAvatar = document.querySelector(userAvatarSelector);
     this._renderLoadingCallback = renderLoadingCallback;
   }
 
@@ -20,6 +27,7 @@ class UserInfo {
       .then((info) => {
         this._profileName.textContent = info.name;
         this._profileStatus.textContent = info.about;
+        this._profileAvatar.setAttribute("src", info.avatar);
       })
       .catch((err) => {
         console.error(err);

@@ -23,7 +23,7 @@ const popupInfoName = document.querySelector("#input-name");
 const popupInfoAbout = document.querySelector("#input-about");
 const avatarInputValue = document.querySelector("#input-src-avatar");
 const linkImg = document.querySelector("#input-src");
-const ImgName = document.querySelector("#input-text-img");
+const imgName = document.querySelector("#input-text-img");
 const profileAvatar = document.querySelector(".profile__avatar");
 
 export {
@@ -36,6 +36,6 @@ export {
   popupInfoAbout,
   avatarInputValue,
   linkImg,
-  ImgName,
+  imgName,
   profileAvatar,
 };

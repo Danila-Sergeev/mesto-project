@@ -29,12 +29,11 @@ export class Card {
   }
 
   _handleLikeClick(evt) {
-    const likeCounter = this._element.querySelector(".card__like-counter");
     if (!evt.target.classList.contains("card__like_status_on")) {
       this._api
         .addCardLike(this._cardId)
-        .then(() => {
-          likeCounter.textContent = Number(likeCounter.textContent) + 1;
+        .then((res) => {
+          this._likeCounter.textContent = res.likes.length;
           evt.target.classList.add("card__like_status_on");
         })
         .catch((err) => {
@@ -43,8 +42,8 @@ export class Card {
     } else if (evt.target.classList.contains("card__like_status_on")) {
       this._api
         .deleteCardLike(this._cardId, this._info)
-        .then(() => {
-          likeCounter.textContent = Number(likeCounter.textContent) - 1;
+        .then((res) => {
+          this._likeCounter.textContent = res.likes.length;
           evt.target.classList.remove("card__like_status_on");
         })
         .catch((err) => {
@@ -61,61 +60,54 @@ export class Card {
       });
 
     //открытие попапа с картинкой:
-    this._element
-      .querySelector(".card__img")
-      .addEventListener("click", (evt) => {
-        evt.preventDefault();
-        this._handleCardClick(this._photoLink, this._placeName);
-      });
+    this._cardImg.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      this._handleCardClick(this._photoLink, this._placeName);
+    });
   }
 
   generate() {
     this._element = this._getTemplate();
+    this._likeCounter = this._element.querySelector(".card__like-counter");
+    this._cardImg = this._element.querySelector(".card__img");
+    this._cardTrash = this._element.querySelector(".card__trash");
+    this._cardLike = this._element.querySelector(".card__like");
+    this._cardImg.setAttribute("src", this._photoLink);
+    this._cardImg.setAttribute("alt", this._placeName);
+    this._element.querySelector(".card__name").textContent = this._placeName;
+    this._likeCounter.textContent = this._placeLikesLength;
     this._setEventListeners();
     this._handleDeliteListener();
-    this._element
-      .querySelector(".card__img")
-      .setAttribute("src", this._photoLink);
-    this._element.querySelector(".card__name").textContent = this._placeName;
-    this._element.querySelector(".card__like-counter").textContent =
-      this._placeLikesLength;
     this._handleOwnLikes();
-    this._element
-      .querySelector(".card__img")
-      .setAttribute("alt", this._placeName);
 
     return this._element;
   }
 
   _handleDeliteListener() {
     if (this._ownCard) {
-      this._element
-        .querySelector(".card__trash")
-        .addEventListener("click", () => {
-          this._api
-            .deleteCard(this._cardId)
-            .then(() => {
-              this._element.remove();
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        });
+      this._cardTrash.addEventListener("click", () => {
+        this._api
+          .deleteCard(this._cardId)
+          .then(() => {
+            this._element.remove();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
     } else {
-      this._element.querySelector(".card__trash").remove();
+      this._cardTrash.remove();
     }
   }
 
   _handleOwnLikes() {
-    if (this._element.querySelector(".card__like-counter").textContent > 0) {
+    if (this._likeCounter.textContent > 0) {
       for (let j = 0; j <= this._placeLikesLength; j++) {
         if (
           this._placeLike[j] !== undefined &&
           this._placeLike[j]._id === this._info._id
         ) {
-          this._element
-            .querySelector(".card__like")
-            .classList.add("card__like_status_on");
+          this._cardLike.classList.add("card__like_status_on");
         }
       }
     }

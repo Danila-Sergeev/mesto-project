@@ -1,10 +1,7 @@
-export class Validator {
+export class FormValidator {
   constructor(settings, formElement) {
     this._settings = settings;
     this._formElement = formElement;
-    this._formList = Array.from(
-      document.querySelectorAll(this._settings.formSelector)
-    );
   }
 
   _checkInputValidity(formElement, inputElement) {
