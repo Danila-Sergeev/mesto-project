@@ -17,8 +17,6 @@ import {
   buttonOpenCardPopup,
   buttonOpenEditPopup,
   avatarEditButton,
-  popupInfoName,
-  popupInfoAbout,
   avatarInputValue,
   linkImg,
   imgName,
