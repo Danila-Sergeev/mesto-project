@@ -2,52 +2,26 @@ class UserInfo {
   constructor(
     userNameSelector,
     userInfoSelector,
-    userAvatarSelector,
-    api,
-    renderLoadingCallback
+    userAvatarSelector
   ) {
-    this._api = api;
     this._profileName = document.querySelector(userNameSelector);
     this._profileStatus = document.querySelector(userInfoSelector);
     this._profileAvatar = document.querySelector(userAvatarSelector);
-    this._renderLoadingCallback = renderLoadingCallback;
-  }
-
-  getProfileName() {
-    return this._profileName.textContent;
-  }
-
-  getProfileStatus() {
-    return this._profileStatus.textContent;
   }
 
   getUserInfo() {
-    return this._api
-      .getUserInfo()
-      .then((info) => {
-        this._profileName.textContent = info.name;
-        this._profileStatus.textContent = info.about;
-        this._profileAvatar.setAttribute("src", info.avatar);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    return {
+      name:  this._profileName.textContent,
+      about: this._profileStatus.textContent,
+      _id: this._userId  // << === это опционально, если получится у Вас
+    }
   }
 
-  setUserInfo(name, status) {
-    this._renderLoadingCallback(true);
-    this._api
-      .patchUserInfo(name.value, status.value)
-      .then((info) => {
-        this._profileName.textContent = info.name;
-        this._profileStatus.textContent = info.about;
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        this._renderLoadingCallback(false);
-      });
+  setUserInfo({ name, about, avatar, _id }) {
+    this._profileName.textContent = name;
+    this._profileStatus.textContent = about;
+    this._profileAvatar.setAttribute("src", avatar);
+    this._userId = _id;
   }
 }
 

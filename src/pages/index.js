@@ -31,15 +31,18 @@ import { UserInfo } from "../components/UserInfo";
 
 const api = new Api(apiConfig);
 let sec = null;
-const userInfo = new UserInfo(
-  ".profile__name",
-  ".profile__status",
-  ".profile__avatar",
-  api,
-  (state) => {
-    renderLoading("add-button-inf", state, "Сохранить");
-  }
-);
+const userInfo = new UserInfo(".profile__name", ".profile__status", ".profile__avatar");
+
+function loadUserInfo() {
+  api.getUserInfo()
+    .then((info) => {
+      userInfo.setUserInfo(info);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+loadUserInfo();
 const info = userInfo.getUserInfo();
 
 const popupAvatar = new PopupWithForm("#popup-avatar", (evt) => {
@@ -65,17 +68,8 @@ const popupPlace = new PopupWithForm("#popup-container-place", (evt) => {
   api
     .additionCardsByForm(imgName.value, linkImg.value)
     .then((card) => {
-      const newCard = new Card(
-        card,
-        true,
-        info,
-        (url, name) => {
-          popupImage.open(url, name);
-        },
-        "#card-template",
-        api
-      );
-      sec.setItem(newCard.generate());
+      const newCard = createCard(card, info);
+      sec.setItem(newCard);
       popupPlace.close();
     })
     .catch((err) => {
@@ -86,13 +80,22 @@ const popupPlace = new PopupWithForm("#popup-container-place", (evt) => {
     });
 });
 
-//TODO close
-
-const popupProfile = new PopupWithForm("#popup", (evt) => {
+const popupProfile = new PopupWithForm("#popup", (evt, data) => {
   evt.preventDefault();
   renderLoading("add-button-inf", true, "Сохранить");
-  userInfo.setUserInfo(popupInfoName, popupInfoAbout);
-});
+  api.patchUserInfo(data.firstname, data.about)
+       .then((info) => {
+        userInfo.setUserInfo(info)
+        popupProfile.close();
+       })
+       .catch((err) => {
+         console.error(err);
+       })
+       .finally(() => {
+        renderLoading("add-button-inf", false, "Сохранить");
+       });
+  });
+
 
 const popupImage = new PopupWithImage(".popup_img");
 
@@ -116,22 +119,21 @@ function createCard(item, info) {
     "#card-template",
     api
   );
-  return newCard;
+  return newCard.generate();
 }
+
 //функция загрузки карточек
 function renderCards() {
-  Promise.all([api.getUserInfo(), api.getCardsInfo()])
-    .then(([info, cards]) => {
+  api.getCardsInfo()
+    .then((cards) => {
       sec = new Section(
         cards.reverse(),
         (item) => {
-          return createCard(item, info);
+          return createCard(item, userInfo.getUserInfo());
         },
         ".cards-grid"
       );
-
       sec.renderItems();
-      profileAvatar.setAttribute("src", info.avatar);
     })
     .catch((err) => {
       console.error(err);

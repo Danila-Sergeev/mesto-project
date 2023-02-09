@@ -15,10 +15,8 @@ export class Section {
 
   renderItems() {
     this.clear();
-
     this._data.forEach((element) => {
-      const el = this._renderer(element);
-      const listElement = el.generate();
+      const listElement = this._renderer(element);
       this.setItem(listElement);
     });
   }

@@ -4,7 +4,9 @@ export class PopupWithForm extends Popup {
     super(popupSelector);
     this._submitCallback = submitCallback;
     this._inputList = this._popup.querySelectorAll(".popup__info");
+    this._form = this._popup.querySelector(".popup__edit");
   }
+
   setInputValues(data) {
     this._inputList.forEach((input) => {
       // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
@@ -13,21 +15,26 @@ export class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const profileName = document.querySelector(".profile__name");
-    const profileStatus = document.querySelector(".profile__status");
-    this._popup.querySelector("#input-name").value = profileName.textContent;
-    this._popup.querySelector("#input-about").value = profileStatus.textContent;
+    // создаём пустой объект
+    this._formValues = {};
+    // добавляем в этот объект значения всех полей
+    this._inputList.forEach(input => {
+    this._formValues[input.name] = input.value;
+  });
+
+    // возвращаем объект значений
+    return this._formValues;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._popup.addEventListener("submit", (evt) => {
-      this._submitCallback(evt);
+      this._submitCallback(evt, this._getInputValues());
     });
   }
 
   close() {
     super.close();
-    this._popup.querySelector(".popup__edit").reset();
+    this._form.reset();
   }
 }
