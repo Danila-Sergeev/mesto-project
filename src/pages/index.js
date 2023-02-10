@@ -2,7 +2,7 @@ import "./index.css";
 import "../components/Card.js";
 import "../components/Popup.js";
 import "../components/utils/utilits.js";
-import "../components/ FormValidator.js";
+import "../components/FormValidator.js";
 import "../components/Api.js";
 import "../components/Section.js";
 import "../components/utils/constants.js";
@@ -22,17 +22,22 @@ import {
   imgName,
   profileAvatar,
 } from "../components/utils/constants.js";
-import { FormValidator } from "../components/ FormValidator.js";
+import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
 import { Section } from "../components/Section.js";
 import { UserInfo } from "../components/UserInfo";
 
 const api = new Api(apiConfig);
 let sec = null;
-const userInfo = new UserInfo(".profile__name", ".profile__status", ".profile__avatar");
+const userInfo = new UserInfo(
+  ".profile__name",
+  ".profile__status",
+  ".profile__avatar"
+);
 
 function loadUserInfo() {
-  api.getUserInfo()
+  api
+    .getUserInfo()
     .then((info) => {
       userInfo.setUserInfo(info);
     })
@@ -81,19 +86,19 @@ const popupPlace = new PopupWithForm("#popup-container-place", (evt) => {
 const popupProfile = new PopupWithForm("#popup", (evt, data) => {
   evt.preventDefault();
   renderLoading("add-button-inf", true, "Сохранить");
-  api.patchUserInfo(data.firstname, data.about)
-       .then((info) => {
-        userInfo.setUserInfo(info)
-        popupProfile.close();
-       })
-       .catch((err) => {
-         console.error(err);
-       })
-       .finally(() => {
-        renderLoading("add-button-inf", false, "Сохранить");
-       });
-  });
-
+  api
+    .patchUserInfo(data.firstname, data.about)
+    .then((info) => {
+      userInfo.setUserInfo(info);
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      renderLoading("add-button-inf", false, "Сохранить");
+    });
+});
 
 const popupImage = new PopupWithImage(".popup_img");
 
@@ -122,7 +127,8 @@ function createCard(item, info) {
 
 //функция загрузки карточек
 function renderCards() {
-  api.getCardsInfo()
+  api
+    .getCardsInfo()
     .then((cards) => {
       sec = new Section(
         cards.reverse(),
