@@ -6,6 +6,7 @@ import "../components/FormValidator.js";
 import "../components/Api.js";
 import "../components/Section.js";
 import "../components/utils/constants.js";
+import "../components/UserInfo.js";
 
 import { Api } from "../components/Api.js";
 import { renderLoading } from "../components/utils/utilits.js";
@@ -25,7 +26,7 @@ import {
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
 import { Section } from "../components/Section.js";
-import { UserInfo } from "../components/UserInfo";
+import { UserInfo } from "../components/UserInfo.js";
 
 const api = new Api(apiConfig);
 let sec = null;
