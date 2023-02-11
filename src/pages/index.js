@@ -24,12 +24,9 @@ import { Section } from "../components/Section.js";
 import { UserInfo } from "../components/UserInfo.js";
 
 const api = new Api(apiConfig);
-const section = new Section(
-  (item) => {
-    return createCard(item, userInfo.getUserInfo());
-  },
-  ".cards-grid"
-);
+const section = new Section((item) => {
+  return createCard(item, userInfo.getUserInfo());
+}, ".cards-grid");
 
 const userInfo = new UserInfo(
   ".profile__name",
@@ -53,7 +50,6 @@ function createCard(item, info) {
 
 //функция загрузки карточек и данных пользователя
 function renderCardsAndUser() {
-  
   Promise.all([api.getCardsInfo(), api.getUserInfo()])
     .then(([cards, userData]) => {
       userInfo.setUserInfo(userData);
@@ -67,13 +63,12 @@ function renderCardsAndUser() {
 renderCardsAndUser();
 
 // Avatar
-const popupAvatar = new PopupWithForm("#popup-avatar", (evt, {about}) => {
+const popupAvatar = new PopupWithForm("#popup-avatar", (evt, { about }) => {
   evt.preventDefault();
-  popupAvatar.renderLoading(true)
+  popupAvatar.renderLoading(true);
   api
     .patchAvatar(about)
     .then((info) => {
-      console.log(info)
       userInfo.setUserInfo(info);
       popupAvatar.close();
     })
@@ -81,46 +76,52 @@ const popupAvatar = new PopupWithForm("#popup-avatar", (evt, {about}) => {
       console.error(err);
     })
     .finally(() => {
-      popupAvatar.renderLoading(false)
+      popupAvatar.renderLoading(false);
     });
 });
 
 // Card
-const popupPlace = new PopupWithForm("#popup-container-place", (evt, {place, placeUrl}) => {
-  evt.preventDefault();
-  popupPlace.renderLoading(true)
-  api
-    .additionCardsByForm(place, placeUrl)
-    .then((card) => {
-      const newCard = createCard(card, userInfo.getUserInfo());
-      section.setItem(newCard);
-      popupPlace.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      popupPlace.renderLoading(false);
-    });
-});
+const popupPlace = new PopupWithForm(
+  "#popup-container-place",
+  (evt, { place, placeUrl }) => {
+    evt.preventDefault();
+    popupPlace.renderLoading(true);
+    api
+      .additionCardsByForm(place, placeUrl)
+      .then((card) => {
+        const newCard = createCard(card, userInfo.getUserInfo());
+        section.setItem(newCard);
+        popupPlace.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        popupPlace.renderLoading(false);
+      });
+  }
+);
 
 // Profile
-const popupProfile = new PopupWithForm("#popup", (evt, {firstname, about}) => {
-  evt.preventDefault();
-  popupProfile.renderLoading(true);
-  api
-    .patchUserInfo(firstname, about)
-    .then((info) => {
-      userInfo.setUserInfo(info);
-      popupProfile.close();
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      popupProfile.renderLoading(false);
-    });
-});
+const popupProfile = new PopupWithForm(
+  "#popup",
+  (evt, { firstname, about }) => {
+    evt.preventDefault();
+    popupProfile.renderLoading(true);
+    api
+      .patchUserInfo(firstname, about)
+      .then((info) => {
+        userInfo.setUserInfo(info);
+        popupProfile.close();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        popupProfile.renderLoading(false);
+      });
+  }
+);
 
 const popupImage = new PopupWithImage(".popup_img");
 
@@ -135,9 +136,7 @@ addFormValidation(settings.formSelector);
 
 buttonOpenEditPopup.addEventListener("click", () => {
   popupProfile.open();
-  popupProfile.setInputValues(
-    userInfo.getUserInfo()
-  );
+  popupProfile.setInputValues(userInfo.getUserInfo());
 });
 avatarEditButton.addEventListener("click", () => popupAvatar.open());
 profileAvatar.addEventListener("click", () => popupAvatar.open());

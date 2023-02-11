@@ -44,6 +44,9 @@ export class FormValidator {
           this._settings
         );
       }, 0);
+      this._inputList.forEach((inputElement) => {
+        this._hideInputError(this._formElement, inputElement, this._settings);
+      });
     });
 
     this._inputList.forEach((inputElement) => {
