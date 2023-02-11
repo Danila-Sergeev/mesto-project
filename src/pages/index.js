@@ -4,7 +4,7 @@ import "../components/Popup.js";
 import "../components/utils/utilits.js";
 import "../components/FormValidator.js";
 import "../components/Api.js";
-import "../components/Section.js";
+import "../components/Section1.js";
 import "../components/utils/constants.js";
 import "../components/UserInfo.js";
 
@@ -25,7 +25,7 @@ import {
 } from "../components/utils/constants.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
-import { Section } from "../components/Section.js";
+import { Section } from "../components/Section1.js";
 import { UserInfo } from "../components/UserInfo.js";
 
 const api = new Api(apiConfig);
