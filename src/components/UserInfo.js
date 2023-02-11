@@ -11,8 +11,9 @@ class UserInfo {
 
   getUserInfo() {
     return {
-      name:  this._profileName.textContent,
+      firstname:  this._profileName.textContent,
       about: this._profileStatus.textContent,
+      avatar: this._profileAvatar.value,
       _id: this._userId  // << === это опционально, если получится у Вас
     }
   }

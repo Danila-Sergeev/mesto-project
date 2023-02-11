@@ -1,8 +1,11 @@
 export class Section {
-  constructor(data, renderer, containerSelector) {
-    this._data = data;
+  constructor(renderer, containerSelector) {
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
+  }
+
+  setData(data) {
+    this._data = data;
   }
 
   clear() {

@@ -21,9 +21,6 @@ const buttonOpenEditPopup = document.querySelector(".profile__edit");
 const avatarEditButton = document.querySelector(".profile__avatar_edit");
 const popupInfoName = document.querySelector("#input-name");
 const popupInfoAbout = document.querySelector("#input-about");
-const avatarInputValue = document.querySelector("#input-src-avatar");
-const linkImg = document.querySelector("#input-src");
-const imgName = document.querySelector("#input-text-img");
 const profileAvatar = document.querySelector(".profile__avatar");
 
 export {
@@ -34,8 +31,5 @@ export {
   avatarEditButton,
   popupInfoName,
   popupInfoAbout,
-  avatarInputValue,
-  linkImg,
-  imgName,
-  profileAvatar,
+  profileAvatar
 };

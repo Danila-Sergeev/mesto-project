@@ -53,8 +53,7 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._element
-      .querySelector(".card__like")
+    this._cardLike
       .addEventListener("click", (evt) => {
         this._handleLikeClick(evt);
       });
@@ -80,7 +79,7 @@ export class Card {
     this._handleDeliteListener();
     this._handleOwnLikes();
 
-    return this._element;
+    return this._element ;
   }
 
   _handleDeliteListener() {
